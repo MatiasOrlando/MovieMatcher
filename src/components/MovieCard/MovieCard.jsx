@@ -15,22 +15,39 @@ import { context } from "../../Context/Context";
 import { useEffect } from "react";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import Tooltip from "@mui/material/Tooltip";
 
 const MovieCard = ({ movie }) => {
   const { pathname } = useLocation();
   const pathnameClean = pathname.slice(1);
   const path = "https://image.tmdb.org/t/p/w300";
+  const [isStarred, setIsStarred] = useState(false);
   const { userFavorites, setUserFavorites, userWatchLater, setUserWatchLater } =
     useContext(context);
-  const [isStarred, setIsStarred] = useState(false);
+
+  useEffect(() => {
+    const storedFavorites = localStorage.getItem("userFavorites");
+    if (storedFavorites) {
+      setUserFavorites(JSON.parse(storedFavorites));
+    }
+  }, [setUserFavorites]);
+
+  useEffect(() => {
+    const storedWatchLater = localStorage.getItem("userWatchLater");
+    if (storedWatchLater) {
+      setUserWatchLater(JSON.parse(storedWatchLater));
+    }
+  }, [setUserWatchLater]);
+
+  useEffect(() => {
+    setIsStarred(userFavorites.some((userMovie) => userMovie.id === movie.id));
+  }, [movie.id, userFavorites]);
 
   const handleFavorites = (movie) => {
-    const movieIndex = userFavorites.findIndex(
-      (userMovie) => userMovie.id === movie.id
-    );
     if (isStarred) {
-      const newFavorites = [...userFavorites];
-      newFavorites.splice(movieIndex, 1);
+      const newFavorites = userFavorites.filter(
+        (userMovie) => userMovie.id !== movie.id
+      );
       localStorage.setItem("userFavorites", JSON.stringify(newFavorites));
       setUserFavorites(newFavorites);
       setIsStarred(false);
@@ -47,16 +64,13 @@ const MovieCard = ({ movie }) => {
     setUserWatchLater(newUserWatchLater);
   };
 
-  useEffect(() => {
-    const storedFavorites = localStorage.getItem("userFavorites");
-    if (storedFavorites) {
-      setUserFavorites(JSON.parse(storedFavorites));
-    }
-  }, [setUserFavorites]);
-
-  useEffect(() => {
-    setIsStarred(userFavorites.some((userMovie) => userMovie.id === movie.id));
-  }, [movie.id, userFavorites]);
+  const handleDeleteWatchLater = (movie) => {
+    const updatedWatchList = userWatchLater.filter(
+      (userMovie) => userMovie.id !== movie.id
+    );
+    localStorage.setItem("userWatchLater", JSON.stringify(updatedWatchList));
+    setUserWatchLater(updatedWatchList);
+  };
 
   return (
     <Card
@@ -111,11 +125,15 @@ const MovieCard = ({ movie }) => {
                 height: "auto",
               }}
             >
-              {isStarred ? (
-                <StarIcon sx={{ opacity: 0.5 }} />
-              ) : (
-                <StarBorderIcon sx={{ opacity: 0.5 }} />
-              )}
+              <Tooltip
+                title={isStarred ? "Remove from favorites" : "Add to favorites"}
+              >
+                {isStarred ? (
+                  <StarIcon sx={{ opacity: 0.5 }} />
+                ) : (
+                  <StarBorderIcon sx={{ opacity: 0.5 }} />
+                )}
+              </Tooltip>
             </ToggleButton>
           </ToggleButtonGroup>
         </div>
@@ -132,11 +150,13 @@ const MovieCard = ({ movie }) => {
                 }}
                 onClick={() => handleWatchLater(movie)}
               >
-                <WatchLaterOutlinedIcon
-                  fontSize="small"
-                  color="disabled"
-                  sx={{ paddingTop: "0.1em" }}
-                />
+                <Tooltip title="Add to watch list">
+                  <WatchLaterOutlinedIcon
+                    fontSize="small"
+                    color="disabled"
+                    sx={{ paddingTop: "0.1em" }}
+                  />
+                </Tooltip>
               </ToggleButton>
             </ToggleButtonGroup>
           ) : (
@@ -149,8 +169,11 @@ const MovieCard = ({ movie }) => {
                   width: "auto",
                   height: "auto",
                 }}
+                onClick={() => handleDeleteWatchLater(movie)}
               >
-                <DeleteForeverOutlinedIcon color="disabled" />
+                <Tooltip title="Remove from watch list">
+                  <DeleteForeverOutlinedIcon color="disabled" />
+                </Tooltip>
               </ToggleButton>{" "}
             </ToggleButtonGroup>
           )}

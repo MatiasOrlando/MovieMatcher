@@ -20,7 +20,7 @@ const UserWatchLater = ({ userWatchLaterMovies }) => {
           })}
         </div>
       ) : (
-        <h3 style={{ textAlign: "center" }}>Watch list is empty..</h3>
+        <h3 style={{ textAlign: "center" }}>Watch list is empty...</h3>
       )}
     </>
   );
