@@ -13,3 +13,15 @@ export const fetchTrendyMovies = (endpoint, params) => {
   const url = `${baseUrl}/${endpoint}/movie?api_key=${apiKey}&language=${language}&page=${page}`;
   return axios.get(url);
 };
+
+export const fetchSingleMovie = (endpoint, params) => {
+  const { language, page, movieId } = params;
+  const url = `${baseUrl}/${endpoint}/${movieId}?api_key=${apiKey}&language=${language}&page=${page}`;
+  return axios.get(url);
+};
+
+export const fetchMovieTrailer = (endpoint, params, videos) => {
+  const { language, movieId } = params;
+  const url = `${baseUrl}/${endpoint}/${movieId}/${videos}?api_key=${apiKey}&language=${language}`;
+  return axios.get(url);
+};

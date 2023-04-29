@@ -20,7 +20,9 @@ function UserFavorites({ userFavoriteMovies }) {
           })}
         </div>
       ) : (
-        <h3 style={{ textAlign: "center" }}>No favorites added yet..</h3>
+        <h3 style={{ textAlign: "center", marginTop: "20px" }}>
+          No favorites added yet..
+        </h3>
       )}
     </>
   );

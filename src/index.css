@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.trailerMovie {
+  width: 560px;
+  height: 315px;
+}
+
+@media (max-width: 768px) {
+  .trailerMovie {
+    width: 80%;
+    height: 300px;
+  }
+}
