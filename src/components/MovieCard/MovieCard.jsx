@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -12,10 +12,10 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import { context } from "../../Context/Context";
-import { useEffect } from "react";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import Tooltip from "@mui/material/Tooltip";
+import toast, { Toaster } from "react-hot-toast";
 
 const MovieCard = ({ movie }) => {
   const { pathname } = useLocation();
@@ -51,10 +51,24 @@ const MovieCard = ({ movie }) => {
       localStorage.setItem("userFavorites", JSON.stringify(newFavorites));
       setUserFavorites(newFavorites);
       setIsStarred(false);
+      toast.error("Removed from fravorites", {
+        duration: "100",
+        style: {
+          background: "black",
+          color: "white",
+        },
+      });
     } else {
       const newFavorites = [...userFavorites, movie];
       localStorage.setItem("userFavorites", JSON.stringify(newFavorites));
       setUserFavorites(newFavorites);
+      toast.success("Successfully added to favorites", {
+        duration: "100",
+        style: {
+          background: "black",
+          color: "white",
+        },
+      });
     }
   };
 
@@ -62,6 +76,13 @@ const MovieCard = ({ movie }) => {
     const newUserWatchLater = [...userWatchLater, movie];
     localStorage.setItem("userWatchLater", JSON.stringify(newUserWatchLater));
     setUserWatchLater(newUserWatchLater);
+    toast.success("Successfully added to watch list", {
+      duration: "100",
+      style: {
+        background: "black",
+        color: "white",
+      },
+    });
   };
 
   const handleDeleteWatchLater = (movie) => {
@@ -70,130 +91,140 @@ const MovieCard = ({ movie }) => {
     );
     localStorage.setItem("userWatchLater", JSON.stringify(updatedWatchList));
     setUserWatchLater(updatedWatchList);
+    toast.error("Removed from watch list", {
+      duration: "100",
+      style: {
+        background: "black",
+        color: "white",
+      },
+    });
   };
 
   return (
-    <Card
-      sx={{
-        width: 255,
-        height: 500,
-        margin: "20px 0 20px 0px",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-      }}
-    >
-      <CardMedia
-        component="img"
-        alt="green iguana"
-        height="340"
-        image={
-          movie.poster_path ? `${path}${movie.poster_path}` : noImageAvailable
-        }
-      />
+    <>
+      <Card
+        sx={{
+          width: 255,
+          height: 500,
+          margin: "20px 0 20px 0px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        <CardMedia
+          component="img"
+          alt="green iguana"
+          height="340"
+          image={
+            movie.poster_path ? `${path}${movie.poster_path}` : noImageAvailable
+          }
+        />
 
-      <CardContent>
-        <Typography
-          gutterBottom
-          variant="h5"
-          sx={{
-            fontSize: "1.1em",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            display: "-webkit-box",
-            WebkitBoxOrient: "vertical",
-            WebkitLineClamp: 2,
-          }}
-          component="div"
-        >
-          {movie.title}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {movie.release_date}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <div>
-          <ToggleButtonGroup>
-            <ToggleButton
-              value={isStarred}
-              onClick={() => handleFavorites(movie)}
-              style={{
-                border: "none",
-                padding: 0,
-                width: "auto",
-                height: "auto",
-              }}
-            >
+        <CardContent>
+          <Typography
+            gutterBottom
+            variant="h5"
+            sx={{
+              fontSize: "1.1em",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitBoxOrient: "vertical",
+              WebkitLineClamp: 2,
+            }}
+            component="div"
+          >
+            {movie.title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {movie.release_date}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <div>
+            <ToggleButtonGroup>
               <Tooltip
                 title={isStarred ? "Remove from favorites" : "Add to favorites"}
               >
-                {isStarred ? (
-                  <StarIcon sx={{ opacity: 0.5 }} />
-                ) : (
-                  <StarBorderIcon sx={{ opacity: 0.5 }} />
-                )}
+                <ToggleButton
+                  value={isStarred}
+                  onClick={() => handleFavorites(movie)}
+                  style={{
+                    border: "none",
+                    padding: 0,
+                    width: "auto",
+                    height: "auto",
+                  }}
+                >
+                  {isStarred ? (
+                    <StarIcon sx={{ opacity: 0.5 }} />
+                  ) : (
+                    <StarBorderIcon sx={{ opacity: 0.5 }} />
+                  )}
+                </ToggleButton>
               </Tooltip>
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </div>
-        <div>
-          {pathnameClean !== "watchlater" ? (
-            <ToggleButtonGroup>
-              <ToggleButton
-                value={""}
-                style={{
-                  border: "none",
-                  padding: 0,
-                  width: "auto",
-                  height: "auto",
-                }}
-                onClick={() => handleWatchLater(movie)}
-              >
-                <Tooltip title="Add to watch list">
-                  <WatchLaterOutlinedIcon
-                    fontSize="small"
-                    color="disabled"
-                    sx={{ paddingTop: "0.1em" }}
-                  />
-                </Tooltip>
-              </ToggleButton>
             </ToggleButtonGroup>
-          ) : (
-            <ToggleButtonGroup>
-              <ToggleButton
-                value={""}
-                style={{
-                  border: "none",
-                  padding: 0,
-                  width: "auto",
-                  height: "auto",
-                }}
-                onClick={() => handleDeleteWatchLater(movie)}
-              >
-                <Tooltip title="Remove from watch list">
-                  <DeleteForeverOutlinedIcon color="disabled" />
-                </Tooltip>
-              </ToggleButton>{" "}
-            </ToggleButtonGroup>
-          )}
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "200px",
-          }}
-        >
-          <div style={{ maxHeight: "20%" }}>
-            <Link to={`/movies/${movie.id}`}>
-              <Button size="small">Learn More</Button>
-            </Link>
           </div>
-        </div>
-      </CardActions>
-    </Card>
+          <div>
+            {pathnameClean !== "watchlater" ? (
+              <ToggleButtonGroup>
+                <ToggleButton
+                  value={""}
+                  style={{
+                    border: "none",
+                    padding: 0,
+                    width: "auto",
+                    height: "auto",
+                  }}
+                  onClick={() => handleWatchLater(movie)}
+                >
+                  <Tooltip title="Add to watch list">
+                    <WatchLaterOutlinedIcon
+                      fontSize="small"
+                      color="disabled"
+                      sx={{ paddingTop: "0.1em" }}
+                    />
+                  </Tooltip>
+                </ToggleButton>
+              </ToggleButtonGroup>
+            ) : (
+              <ToggleButtonGroup>
+                <ToggleButton
+                  value=""
+                  style={{
+                    border: "none",
+                    padding: 0,
+                    width: "auto",
+                    height: "auto",
+                  }}
+                  onClick={() => handleDeleteWatchLater(movie)}
+                >
+                  <Tooltip title="Remove from watch list">
+                    <DeleteForeverOutlinedIcon color="disabled" />
+                  </Tooltip>
+                </ToggleButton>{" "}
+              </ToggleButtonGroup>
+            )}
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "200px",
+            }}
+          >
+            <div style={{ maxHeight: "20%" }}>
+              <Link to={`/movies/${movie.id}`}>
+                <Button size="small">Learn More</Button>
+              </Link>
+            </div>
+          </div>
+        </CardActions>
+      </Card>
+      <Toaster />
+    </>
   );
 };
 

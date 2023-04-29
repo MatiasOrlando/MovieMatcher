@@ -5,7 +5,6 @@ function UserFavorites({ userFavoriteMovies }) {
   return (
     <>
       <h2 style={{ textAlign: "center", marginTop: "50px" }}>My favorites</h2>
-
       {userFavoriteMovies && userFavoriteMovies.length >= 1 ? (
         <div
           style={{

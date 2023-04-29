@@ -1,5 +1,6 @@
-import React, { createContext, useState, useEffect } from "react";
-import axios from "axios";
+import React, { createContext, useState } from "react";
+import { fetchQueryMovies } from "../services/api";
+import toast from "react-hot-toast";
 
 export const context = createContext();
 const { Provider } = context;
@@ -9,14 +10,26 @@ const Context = ({ children }) => {
   const [userFavorites, setUserFavorites] = useState([]);
   const [userWatchLater, setUserWatchLater] = useState([]);
   const [movieQuerySearch, setMovieQuerySearch] = useState([]);
-  const apiKey = "3651041388931cf01228edbff2087680";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const movieQuery = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchTerm}`
-    );
-    setMovieQuerySearch(movieQuery.data.results);
+    try {
+      const movieQuery = await fetchQueryMovies("search", {
+        searchTermValue: searchTerm,
+      });
+      setMovieQuerySearch(movieQuery.data.results);
+      if (!movieQuery.data.results.length) {
+        toast.error("No matches found, please try again", {
+          duration: "100",
+          style: {
+            background: "black",
+            color: "white",
+          },
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const valueContext = {
