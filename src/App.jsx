@@ -1,13 +1,24 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./views/Home";
+import Context from "./Context/Context";
+import Navbar from "./components/Navbar/Navbar";
+import Favorites from "./views/Favorites";
+import MovieDetail from "./views/MovieDetail";
+import WatchLater from "./views/WatchLater";
 
 function App() {
   return (
-    <>
-      <h1>Test project MovieMatcher</h1>
-    </>
+    <BrowserRouter>
+      <Context>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/watchlater" element={<WatchLater />} />
+          <Route path="/movies/:id" element={<MovieDetail />} />
+        </Routes>
+      </Context>
+    </BrowserRouter>
   );
 }
 
