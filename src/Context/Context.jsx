@@ -11,7 +11,7 @@ const Context = ({ children }) => {
   const [userWatchLater, setUserWatchLater] = useState([]);
   const [movieQuerySearch, setMovieQuerySearch] = useState([]);
   const [isStarred, setIsStarred] = useState(false);
-  const [isWatchLater, setIsWatchLater] = useState(false);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem("userFavorites");
@@ -45,6 +45,7 @@ const Context = ({ children }) => {
       }
     } catch (error) {
       console.error(error);
+      setMovieQuerySearch([]);
     }
   };
 
@@ -135,6 +136,8 @@ const Context = ({ children }) => {
     handleFavorites,
     handleWatchLater,
     handleDeleteWatchLater,
+    page,
+    setPage,
   };
   return <Provider value={valueContext}>{children}</Provider>;
 };

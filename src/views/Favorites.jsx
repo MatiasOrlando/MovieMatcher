@@ -9,6 +9,7 @@ const Favorites = () => {
     const allUserFavorites = JSON.parse(localStorage.getItem("userFavorites"));
     setUserFavoriteMovies(allUserFavorites);
   }, [userFavorites]);
+
   return <UserFavorites userFavoriteMovies={userFavoriteMovies} />;
 };
 

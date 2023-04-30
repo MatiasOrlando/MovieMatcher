@@ -1,7 +1,7 @@
 import React from "react";
 import MovieCard from "../MovieCard/MovieCard";
 
-function UserFavorites({ userFavoriteMovies }) {
+const UserFavorites = ({ userFavoriteMovies }) => {
   return (
     <>
       <h2 style={{ textAlign: "center", marginTop: "50px", color: "white" }}>
@@ -28,6 +28,6 @@ function UserFavorites({ userFavoriteMovies }) {
       )}
     </>
   );
-}
+};
 
 export default UserFavorites;

@@ -6,7 +6,7 @@ import { Toaster } from "react-hot-toast";
 
 const MoviesContainer = () => {
   const [dataMovies, setDataMovies] = useState([]);
-  const { movieQuerySearch } = useContext(context);
+  const { movieQuerySearch, page } = useContext(context);
 
   useEffect(() => {
     const fetchDataMovies = async () => {
@@ -16,16 +16,17 @@ const MoviesContainer = () => {
         } else {
           const dataMovies = await fetchTrendyMovies("discover", {
             language: "en-US",
-            page: 1,
+            page: `${page}`,
           });
           setDataMovies(dataMovies.data.results);
         }
       } catch (error) {
         console.error(error);
+        setDataMovies([]);
       }
     };
     fetchDataMovies();
-  }, [movieQuerySearch]);
+  }, [movieQuerySearch, page]);
 
   return (
     <>

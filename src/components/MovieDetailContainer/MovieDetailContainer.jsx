@@ -19,7 +19,6 @@ const MovieDetailContainer = ({ id }) => {
   const [movieDetail, setMovieDetail] = useState({});
   const [trailerUrl, setTrailerUrl] = useState("");
   const [isInFavList, setIsInFavList] = useState(false);
-
   const path = "https://image.tmdb.org/t/p/w342";
   const navigateHome = useNavigate();
   const { handleFavorites, handleWatchLater, userFavorites } =
@@ -35,6 +34,8 @@ const MovieDetailContainer = ({ id }) => {
       setMovieDetail(dataMovie.data);
     };
     fetchDataMovie();
+    const isFavorite = userFavorites.find((movie) => movie.id == id);
+    setIsInFavList(isFavorite !== undefined);
   }, [id, userFavorites]);
 
   useEffect(() => {
@@ -54,11 +55,6 @@ const MovieDetailContainer = ({ id }) => {
     };
     getMovieTrailers(id);
   }, [id]);
-
-  useEffect(() => {
-    const isFavorite = userFavorites.find((movie) => movie.id == id);
-    setIsInFavList(isFavorite !== undefined);
-  }, [id, userFavorites]);
 
   return (
     <>

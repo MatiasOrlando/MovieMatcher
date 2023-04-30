@@ -1,6 +1,7 @@
 import React from "react";
 import SearchBar from "../components/SearchBar/SearchBar";
 import MoviesContainer from "../components/MoviesContainer/MoviesContainer";
+import AppPagination from "../components/AppPagination/AppPagination";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
         <SearchBar />
       </div>
       <MoviesContainer />
+      <AppPagination />
     </>
   );
 };
