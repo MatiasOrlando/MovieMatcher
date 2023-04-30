@@ -4,7 +4,9 @@ import MovieCard from "../MovieCard/MovieCard";
 const UserWatchLater = ({ userWatchLaterMovies }) => {
   return (
     <>
-      <h2 style={{ textAlign: "center", marginTop: "50px" }}>My watch list</h2>
+      <h2 style={{ textAlign: "center", marginTop: "50px", color: "white" }}>
+        My watch list
+      </h2>
       {userWatchLaterMovies && userWatchLaterMovies.length >= 1 ? (
         <div
           style={{
@@ -20,7 +22,7 @@ const UserWatchLater = ({ userWatchLaterMovies }) => {
           })}
         </div>
       ) : (
-        <h3 style={{ textAlign: "center", marginTop: "20px" }}>
+        <h3 style={{ textAlign: "center", marginTop: "20px", color: "white" }}>
           Watch list is empty...
         </h3>
       )}

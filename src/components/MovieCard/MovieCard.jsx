@@ -15,90 +15,23 @@ import { context } from "../../Context/Context";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import Tooltip from "@mui/material/Tooltip";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 const MovieCard = ({ movie }) => {
   const { pathname } = useLocation();
   const pathnameClean = pathname.slice(1);
   const path = "https://image.tmdb.org/t/p/w300";
   const [isStarred, setIsStarred] = useState(false);
-  const { userFavorites, setUserFavorites, userWatchLater, setUserWatchLater } =
-    useContext(context);
-
-  useEffect(() => {
-    const storedFavorites = localStorage.getItem("userFavorites");
-    if (storedFavorites) {
-      setUserFavorites(JSON.parse(storedFavorites));
-    }
-  }, [setUserFavorites]);
-
-  useEffect(() => {
-    const storedWatchLater = localStorage.getItem("userWatchLater");
-    if (storedWatchLater) {
-      setUserWatchLater(JSON.parse(storedWatchLater));
-    }
-  }, [setUserWatchLater]);
+  const {
+    userFavorites,
+    handleFavorites,
+    handleDeleteWatchLater,
+    handleWatchLater,
+  } = useContext(context);
 
   useEffect(() => {
     setIsStarred(userFavorites.some((userMovie) => userMovie.id === movie.id));
   }, [movie.id, userFavorites]);
-
-  const handleFavorites = (movie) => {
-    if (isStarred) {
-      const newFavorites = userFavorites.filter(
-        (userMovie) => userMovie.id !== movie.id
-      );
-      localStorage.setItem("userFavorites", JSON.stringify(newFavorites));
-      setUserFavorites(newFavorites);
-      setIsStarred(false);
-      toast.error("Removed from fravorites", {
-        duration: "100",
-        style: {
-          background: "black",
-          color: "white",
-        },
-      });
-    } else {
-      const newFavorites = [...userFavorites, movie];
-      localStorage.setItem("userFavorites", JSON.stringify(newFavorites));
-      setUserFavorites(newFavorites);
-      toast.success("Successfully added to favorites", {
-        duration: "100",
-        style: {
-          background: "black",
-          color: "white",
-        },
-      });
-    }
-  };
-
-  const handleWatchLater = (movie) => {
-    const newUserWatchLater = [...userWatchLater, movie];
-    localStorage.setItem("userWatchLater", JSON.stringify(newUserWatchLater));
-    setUserWatchLater(newUserWatchLater);
-    toast.success("Successfully added to watch list", {
-      duration: "100",
-      style: {
-        background: "black",
-        color: "white",
-      },
-    });
-  };
-
-  const handleDeleteWatchLater = (movie) => {
-    const updatedWatchList = userWatchLater.filter(
-      (userMovie) => userMovie.id !== movie.id
-    );
-    localStorage.setItem("userWatchLater", JSON.stringify(updatedWatchList));
-    setUserWatchLater(updatedWatchList);
-    toast.error("Removed from watch list", {
-      duration: "100",
-      style: {
-        background: "black",
-        color: "white",
-      },
-    });
-  };
 
   return (
     <>
@@ -110,6 +43,13 @@ const MovieCard = ({ movie }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
+          boxShadow: "0px 10px 8px rgba(0, 0, 0, 0.2)",
+          transform: "perspective(1000px) rotateY(0deg)",
+          transition: "transform 0.5s",
+          "&:hover": {
+            transform: "scale(1.1)",
+            border: "3px solid white",
+          },
         }}
       >
         <CardMedia

@@ -4,7 +4,9 @@ import MovieCard from "../MovieCard/MovieCard";
 function UserFavorites({ userFavoriteMovies }) {
   return (
     <>
-      <h2 style={{ textAlign: "center", marginTop: "50px" }}>My favorites</h2>
+      <h2 style={{ textAlign: "center", marginTop: "50px", color: "white" }}>
+        My favorites
+      </h2>
       {userFavoriteMovies && userFavoriteMovies.length >= 1 ? (
         <div
           style={{
@@ -20,7 +22,7 @@ function UserFavorites({ userFavoriteMovies }) {
           })}
         </div>
       ) : (
-        <h3 style={{ textAlign: "center", marginTop: "20px" }}>
+        <h3 style={{ textAlign: "center", marginTop: "20px", color: "white" }}>
           No favorites added yet..
         </h3>
       )}
