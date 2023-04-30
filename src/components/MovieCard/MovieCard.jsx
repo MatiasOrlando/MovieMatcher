@@ -39,7 +39,7 @@ const MovieCard = ({ movie }) => {
       <Card
         sx={{
           width: 255,
-          height: "100%",
+          height: "500px",
           margin: "20px 0 20px 0px",
           display: "flex",
           flexDirection: "column",
@@ -57,7 +57,7 @@ const MovieCard = ({ movie }) => {
           <CardMedia
             component="img"
             alt="green iguana"
-            height="340"
+            height="360"
             image={
               movie.poster_path
                 ? `${pathImg}${movie.poster_path}`
@@ -81,7 +81,10 @@ const MovieCard = ({ movie }) => {
               boxSizing: "border-box",
               paddingRight: "20px",
               alignItems: "flex-start",
-              height: "45px",
+              height: "3.75em",
+              lineHeight: "1.2em",
+              maxHeight: "2.4em",
+              minHeight: "2.4em",
             }}
             component="div"
           >
