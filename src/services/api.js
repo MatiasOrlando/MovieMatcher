@@ -20,8 +20,8 @@ export const fetchSingleMovie = (endpoint, params) => {
   return axios.get(url);
 };
 
-export const fetchMovieTrailer = (endpoint, params, videos) => {
-  const { language, movieId } = params;
+export const fetchMovieTrailer = (endpoint, params) => {
+  const { language, movieId, videos } = params;
   const url = `${baseUrl}/${endpoint}/${movieId}/${videos}?api_key=${apiKey}&language=${language}`;
   return axios.get(url);
 };

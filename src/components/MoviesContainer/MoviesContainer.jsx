@@ -3,6 +3,7 @@ import MovieCard from "../MovieCard/MovieCard";
 import { context } from "../../Context/Context";
 import { fetchTrendyMovies } from "../../services/api";
 import { Toaster } from "react-hot-toast";
+
 const MoviesContainer = () => {
   const [dataMovies, setDataMovies] = useState([]);
   const { movieQuerySearch } = useContext(context);
