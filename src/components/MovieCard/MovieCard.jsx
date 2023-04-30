@@ -22,6 +22,7 @@ const MovieCard = ({ movie }) => {
   const pathnameClean = pathname.slice(1);
   const path = "https://image.tmdb.org/t/p/w300";
   const [isStarred, setIsStarred] = useState(false);
+
   const {
     userFavorites,
     handleFavorites,
@@ -52,14 +53,18 @@ const MovieCard = ({ movie }) => {
           },
         }}
       >
-        <CardMedia
-          component="img"
-          alt="green iguana"
-          height="340"
-          image={
-            movie.poster_path ? `${path}${movie.poster_path}` : noImageAvailable
-          }
-        />
+        <Link to={`/movies/${movie.id}`}>
+          <CardMedia
+            component="img"
+            alt="green iguana"
+            height="340"
+            image={
+              movie.poster_path
+                ? `${path}${movie.poster_path}`
+                : noImageAvailable
+            }
+          />
+        </Link>
 
         <CardContent>
           <Typography
@@ -72,6 +77,10 @@ const MovieCard = ({ movie }) => {
               display: "-webkit-box",
               WebkitBoxOrient: "vertical",
               WebkitLineClamp: 2,
+              width: "100%",
+              boxSizing: "border-box",
+              paddingRight: "20px",
+              alignItems: "flex-start",
             }}
             component="div"
           >
@@ -117,7 +126,9 @@ const MovieCard = ({ movie }) => {
                     width: "auto",
                     height: "auto",
                   }}
-                  onClick={() => handleWatchLater(movie)}
+                  onClick={() => {
+                    handleWatchLater(movie);
+                  }}
                 >
                   <Tooltip title="Add to watch list">
                     <WatchLaterOutlinedIcon

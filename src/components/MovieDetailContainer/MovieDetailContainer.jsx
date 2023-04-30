@@ -18,9 +18,12 @@ import {
 const MovieDetailContainer = ({ id }) => {
   const [movieDetail, setMovieDetail] = useState({});
   const [trailerUrl, setTrailerUrl] = useState("");
+  const [isInFavList, setIsInFavList] = useState(false);
+
   const path = "https://image.tmdb.org/t/p/w342";
   const navigateHome = useNavigate();
-  const { handleFavorites, handleWatchLater } = useContext(context);
+  const { handleFavorites, handleWatchLater, userFavorites } =
+    useContext(context);
 
   useEffect(() => {
     const fetchDataMovie = async () => {
@@ -32,7 +35,7 @@ const MovieDetailContainer = ({ id }) => {
       setMovieDetail(dataMovie.data);
     };
     fetchDataMovie();
-  }, [id]);
+  }, [id, userFavorites]);
 
   useEffect(() => {
     const getMovieTrailers = async (id) => {
@@ -51,6 +54,11 @@ const MovieDetailContainer = ({ id }) => {
     };
     getMovieTrailers(id);
   }, [id]);
+
+  useEffect(() => {
+    const isFavorite = userFavorites.find((movie) => movie.id == id);
+    setIsInFavList(isFavorite !== undefined);
+  }, [id, userFavorites]);
 
   return (
     <>
@@ -178,7 +186,9 @@ const MovieDetailContainer = ({ id }) => {
                       }}
                       onClick={() => handleFavorites(movieDetail)}
                     >
-                      Add to Favorites
+                      {isInFavList
+                        ? "Remove from favorites"
+                        : "Add to Favorites"}
                     </Button>
                     <Button
                       variant="contained"

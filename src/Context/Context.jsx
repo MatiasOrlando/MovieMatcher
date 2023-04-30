@@ -11,6 +11,7 @@ const Context = ({ children }) => {
   const [userWatchLater, setUserWatchLater] = useState([]);
   const [movieQuerySearch, setMovieQuerySearch] = useState([]);
   const [isStarred, setIsStarred] = useState(false);
+  const [isWatchLater, setIsWatchLater] = useState(false);
 
   useEffect(() => {
     const storedFavorites = localStorage.getItem("userFavorites");
