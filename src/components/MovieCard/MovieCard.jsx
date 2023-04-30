@@ -20,7 +20,7 @@ import { Toaster } from "react-hot-toast";
 const MovieCard = ({ movie }) => {
   const { pathname } = useLocation();
   const pathnameClean = pathname.slice(1);
-  const path = "https://image.tmdb.org/t/p/w300";
+  const pathImg = "https://image.tmdb.org/t/p/w300";
   const [isStarred, setIsStarred] = useState(false);
 
   const {
@@ -39,7 +39,7 @@ const MovieCard = ({ movie }) => {
       <Card
         sx={{
           width: 255,
-          height: 500,
+          height: "100%",
           margin: "20px 0 20px 0px",
           display: "flex",
           flexDirection: "column",
@@ -60,7 +60,7 @@ const MovieCard = ({ movie }) => {
             height="340"
             image={
               movie.poster_path
-                ? `${path}${movie.poster_path}`
+                ? `${pathImg}${movie.poster_path}`
                 : noImageAvailable
             }
           />
@@ -81,6 +81,7 @@ const MovieCard = ({ movie }) => {
               boxSizing: "border-box",
               paddingRight: "20px",
               alignItems: "flex-start",
+              height: "45px",
             }}
             component="div"
           >
@@ -158,7 +159,6 @@ const MovieCard = ({ movie }) => {
               </ToggleButtonGroup>
             )}
           </div>
-
           <div
             style={{
               display: "flex",

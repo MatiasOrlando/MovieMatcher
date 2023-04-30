@@ -19,41 +19,49 @@ const MovieDetailContainer = ({ id }) => {
   const [movieDetail, setMovieDetail] = useState({});
   const [trailerUrl, setTrailerUrl] = useState("");
   const [isInFavList, setIsInFavList] = useState(false);
-  const path = "https://image.tmdb.org/t/p/w342";
+  const pathImg = "https://image.tmdb.org/t/p/w342";
   const navigateHome = useNavigate();
   const { handleFavorites, handleWatchLater, userFavorites } =
     useContext(context);
 
   useEffect(() => {
-    const fetchDataMovie = async () => {
-      const dataMovie = await fetchSingleMovie("movie", {
-        movieId: id,
-        language: "en-US",
-        page: 1,
-      });
-      setMovieDetail(dataMovie.data);
-    };
-    fetchDataMovie();
-    const isFavorite = userFavorites.find((movie) => movie.id == id);
-    setIsInFavList(isFavorite !== undefined);
+    try {
+      const fetchDataMovie = async () => {
+        const dataMovie = await fetchSingleMovie("movie", {
+          movieId: id,
+          language: "en-US",
+          page: 1,
+        });
+        setMovieDetail(dataMovie.data);
+      };
+      fetchDataMovie();
+      const isFavorite = userFavorites.find((movie) => movie.id == id);
+      setIsInFavList(isFavorite !== undefined);
+    } catch (error) {
+      console.log(error);
+    }
   }, [id, userFavorites]);
 
   useEffect(() => {
-    const getMovieTrailers = async (id) => {
-      const responseTrailers = await fetchMovieTrailer("movie", {
-        language: "en-US",
-        movieId: id,
-        videos: "videos",
-      });
-      const trailers = responseTrailers.data.results.filter(
-        (video) => video.type === "Trailer"
-      );
-      if (trailers.length > 0) {
-        const trailerKey = trailers[0].key;
-        setTrailerUrl(`https://www.youtube.com/embed/${trailerKey}`);
-      }
-    };
-    getMovieTrailers(id);
+    try {
+      const getMovieTrailers = async (id) => {
+        const responseTrailers = await fetchMovieTrailer("movie", {
+          language: "en-US",
+          movieId: id,
+          videos: "videos",
+        });
+        const trailers = responseTrailers.data.results.filter(
+          (video) => video.type === "Trailer"
+        );
+        if (trailers.length > 0) {
+          const trailerKey = trailers[0].key;
+          setTrailerUrl(`https://www.youtube.com/embed/${trailerKey}`);
+        }
+      };
+      getMovieTrailers(id);
+    } catch (error) {
+      console.error(error);
+    }
   }, [id]);
 
   return (
@@ -66,7 +74,7 @@ const MovieDetailContainer = ({ id }) => {
                 component="img"
                 image={
                   movieDetail.poster_path
-                    ? `${path}${movieDetail.poster_path}`
+                    ? `${pathImg}${movieDetail.poster_path}`
                     : noImageAvailable
                 }
                 alt={movieDetail.title}

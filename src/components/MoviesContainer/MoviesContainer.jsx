@@ -6,23 +6,27 @@ import { Toaster } from "react-hot-toast";
 
 const MoviesContainer = () => {
   const [dataMovies, setDataMovies] = useState([]);
-  const { movieQuerySearch, page } = useContext(context);
+  const { movieQuerySearch, page, setPagination, pagination } =
+    useContext(context);
 
   useEffect(() => {
     const fetchDataMovies = async () => {
       try {
         if (movieQuerySearch && movieQuerySearch.length >= 1) {
           setDataMovies(movieQuerySearch);
+          setPagination(false);
         } else {
           const dataMovies = await fetchTrendyMovies("discover", {
             language: "en-US",
             page: `${page}`,
           });
           setDataMovies(dataMovies.data.results);
+          setPagination(true);
         }
       } catch (error) {
         console.error(error);
         setDataMovies([]);
+        setPagination(false);
       }
     };
     fetchDataMovies();

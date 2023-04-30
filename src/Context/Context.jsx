@@ -11,6 +11,7 @@ const Context = ({ children }) => {
   const [userWatchLater, setUserWatchLater] = useState([]);
   const [movieQuerySearch, setMovieQuerySearch] = useState([]);
   const [isStarred, setIsStarred] = useState(false);
+  const [pagination, setPagination] = useState(false);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -138,6 +139,8 @@ const Context = ({ children }) => {
     handleDeleteWatchLater,
     page,
     setPage,
+    setPagination,
+    pagination,
   };
   return <Provider value={valueContext}>{children}</Provider>;
 };
