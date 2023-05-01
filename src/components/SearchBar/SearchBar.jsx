@@ -21,7 +21,12 @@ const SearchBar = () => {
           setSearchTerm(e.target.value);
         }}
       />
-      <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+      <IconButton
+        type="submit"
+        sx={{ p: "10px" }}
+        aria-label="search"
+        onSubmit={handleSubmit}
+      >
         <SearchIcon />
       </IconButton>
     </Paper>

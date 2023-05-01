@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import Pagination from "@mui/material/Pagination";
 import { context } from "../../Context/Context";
+import { LogoDev } from "@mui/icons-material";
 
 const AppPagination = () => {
   const { setPage, page, pagination } = useContext(context);
 
-  const handleChange = (page) => {
-    setPage(parseInt(page));
+  const handleChange = (event, page) => {
+    setPage(+page);
     window.scrollTo(0, 0);
   };
 
@@ -20,9 +21,7 @@ const AppPagination = () => {
     >
       {pagination && (
         <Pagination
-          onChange={(e) => {
-            handleChange(e.target.textContent);
-          }}
+          onChange={handleChange}
           page={page}
           count={5}
           sx={{
