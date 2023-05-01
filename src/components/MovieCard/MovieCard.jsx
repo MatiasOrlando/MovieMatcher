@@ -52,6 +52,7 @@ const MovieCard = ({ movie }) => {
             border: "3px solid white",
           },
         }}
+        data-test-query-search="movie-card"
       >
         <Link to={`/movies/${movie.id}`}>
           <CardMedia

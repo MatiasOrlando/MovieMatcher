@@ -18,6 +18,7 @@ const SearchBar = () => {
         width: { xs: 300, sm: 320, md: 440, lg: 640 },
       }}
       onSubmit={handleSubmit}
+      name="search"
     >
       <InputBase
         sx={{ ml: 1, flex: 1 }}

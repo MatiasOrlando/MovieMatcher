@@ -19,14 +19,14 @@ const Context = ({ children }) => {
     if (storedFavorites) {
       setUserFavorites(JSON.parse(storedFavorites));
     }
-  }, [setUserFavorites]);
+  }, []);
 
   useEffect(() => {
     const storedWatchLater = localStorage.getItem("userWatchLater");
     if (storedWatchLater) {
       setUserWatchLater(JSON.parse(storedWatchLater));
     }
-  }, [setUserWatchLater]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,16 +37,16 @@ const Context = ({ children }) => {
       setMovieQuerySearch(movieQuery.data.results);
       if (!movieQuery.data.results.length) {
         toast.error("No matches found, please try again", {
-          duration: "100",
+          duration: 1000,
           style: {
             background: "black",
             color: "white",
           },
+          className: "error-toast-test",
         });
       }
     } catch (error) {
       console.error(error);
-      setMovieQuerySearch([]);
     }
   };
 

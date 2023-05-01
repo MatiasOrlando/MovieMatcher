@@ -19,6 +19,7 @@ const MovieDetailContainer = ({ id }) => {
   const [movieDetail, setMovieDetail] = useState({});
   const [trailerUrl, setTrailerUrl] = useState("");
   const [isInFavList, setIsInFavList] = useState(false);
+  const [isErr, setIsErr] = useState(false);
   const pathImg = "https://image.tmdb.org/t/p/w342";
   const navigateHome = useNavigate();
   const { handleFavorites, handleWatchLater, userFavorites } =
@@ -39,6 +40,7 @@ const MovieDetailContainer = ({ id }) => {
       setIsInFavList(isFavorite !== undefined);
     } catch (error) {
       console.log(error);
+      setIsErr(true);
     }
   }, [id, userFavorites]);
 
@@ -66,186 +68,196 @@ const MovieDetailContainer = ({ id }) => {
 
   return (
     <>
-      <Box sx={{ minHeight: "80vh" }}>
-        <Container maxWidth="md">
-          <Grid container spacing={4} sx={{ mt: { xs: 4, lg: 7 } }}>
-            <Grid item xs={12} md={5} maxWidth="lg" sx={{ width: "100%" }}>
-              <CardMedia
-                component="img"
-                image={
-                  movieDetail.poster_path
-                    ? `${pathImg}${movieDetail.poster_path}`
-                    : noImageAvailable
-                }
-                alt={movieDetail.title}
-                sx={{
-                  margin: "0 auto",
-                  height: {
-                    xs: "350px",
-                    sm: "350px",
-                    md: "500px",
-                  },
-                  width: { xs: "auto", sm: "auto", md: "100%" },
-                  objectFit: "cover",
-                  textAlign: "center",
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} md={7}>
-              <Box sx={{ height: "100%" }}>
-                <CardContent sx={{ height: "100%" }}>
-                  <Typography
-                    gutterBottom
-                    variant="h4"
+      {isErr ? (
+        <div> No data available </div>
+      ) : (
+        <>
+          <Box sx={{ minHeight: "80vh" }}>
+            <Container maxWidth="md">
+              <Grid container spacing={4} sx={{ mt: { xs: 4, lg: 7 } }}>
+                <Grid item xs={12} md={5} maxWidth="lg" sx={{ width: "100%" }}>
+                  <CardMedia
+                    component="img"
+                    image={
+                      movieDetail.poster_path
+                        ? `${pathImg}${movieDetail.poster_path}`
+                        : noImageAvailable
+                    }
+                    alt={movieDetail.title}
                     sx={{
-                      color: "white",
-                      fontSize: {
-                        xs: "1.5rem",
-                        sm: "1.7rem",
-                        md: "2rem",
+                      margin: "0 auto",
+                      height: {
+                        xs: "350px",
+                        sm: "350px",
+                        md: "500px",
                       },
+                      width: { xs: "auto", sm: "auto", md: "100%" },
+                      objectFit: "cover",
+                      textAlign: "center",
                     }}
-                  >
-                    {movieDetail.title}
-                  </Typography>
-                  <Typography
-                    gutterBottom
-                    variant="h6"
-                    sx={{
-                      color: "white",
-                      fontSize: {
-                        xs: "1rem",
-                        sm: "1rem",
-                        md: "1rem",
-                      },
-                    }}
-                  >
-                    <strong>Overview:</strong>
-                  </Typography>
-                  <Typography
-                    gutterBottom
-                    variant="body1"
-                    sx={{
-                      color: "white",
-                      fontSize: {
-                        xs: "0.8rem",
-                        sm: "0.9rem",
-                        md: "1rem",
-                      },
-                    }}
-                  >
-                    {movieDetail.overview}
-                  </Typography>
-                  <Box sx={{ mt: 1 }}>
-                    <div>
-                      <Typography variant="body1" sx={{ color: "white" }}>
-                        <strong>Genres:</strong>
+                  />
+                </Grid>
+                <Grid item xs={12} md={7}>
+                  <Box sx={{ height: "100%" }}>
+                    <CardContent sx={{ height: "100%" }}>
+                      <Typography
+                        gutterBottom
+                        variant="h4"
+                        sx={{
+                          color: "white",
+                          fontSize: {
+                            xs: "1.5rem",
+                            sm: "1.7rem",
+                            md: "2rem",
+                          },
+                        }}
+                      >
+                        {movieDetail.title}
                       </Typography>
-                      {movieDetail.genres &&
-                        movieDetail.genres.map(({ name }) => (
-                          <Chip
-                            key={name}
-                            label={name}
-                            sx={{
-                              backgroundColor: "white",
-                              ml: 1,
-                              marginTop: { xs: 1.5 },
-                              color: "black",
-                              opacity: 0.9,
-                            }}
-                          />
-                        ))}
-                    </div>
-                    <Typography
-                      variant="body1"
-                      sx={{ color: "white", mt: 0.5, marginTop: { xs: 2.5 } }}
-                    >
-                      <strong>Vote average: </strong>
-                      {isNaN(movieDetail.vote_average) ||
-                      movieDetail.vote_average === 0.0
-                        ? "NO RATE"
-                        : parseFloat(movieDetail.vote_average).toFixed(2)}
-                    </Typography>
-                  </Box>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      width: "100%",
-                      mt: {
-                        xs: 4,
-                        lg: 6,
-                      },
-                    }}
-                  >
-                    <Button
-                      variant="contained"
-                      sx={{
-                        backgroundColor: "#21293D",
-                        boxShadow: "0px 3px 8px rgba(255, 255, 255, 0.3)",
-                        color: "white",
-                        marginRight: 2,
+                      <Typography
+                        gutterBottom
+                        variant="h6"
+                        sx={{
+                          color: "white",
+                          fontSize: {
+                            xs: "1rem",
+                            sm: "1rem",
+                            md: "1rem",
+                          },
+                        }}
+                      >
+                        <strong>Overview:</strong>
+                      </Typography>
+                      <Typography
+                        gutterBottom
+                        variant="body1"
+                        sx={{
+                          color: "white",
+                          fontSize: {
+                            xs: "0.8rem",
+                            sm: "0.9rem",
+                            md: "1rem",
+                          },
+                        }}
+                      >
+                        {movieDetail.overview}
+                      </Typography>
+                      <Box sx={{ mt: 1 }}>
+                        <div>
+                          <Typography variant="body1" sx={{ color: "white" }}>
+                            <strong>Genres:</strong>
+                          </Typography>
+                          {movieDetail.genres &&
+                            movieDetail.genres.map(({ name }) => (
+                              <Chip
+                                key={name}
+                                label={name}
+                                sx={{
+                                  backgroundColor: "white",
+                                  ml: 1,
+                                  marginTop: { xs: 1.5 },
+                                  color: "black",
+                                  opacity: 0.9,
+                                }}
+                              />
+                            ))}
+                        </div>
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            color: "white",
+                            mt: 0.5,
+                            marginTop: { xs: 2.5 },
+                          }}
+                        >
+                          <strong>Vote average: </strong>
+                          {isNaN(movieDetail.vote_average) ||
+                          movieDetail.vote_average === 0.0
+                            ? "NO RATE"
+                            : parseFloat(movieDetail.vote_average).toFixed(2)}
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          mt: {
+                            xs: 4,
+                            lg: 6,
+                          },
+                        }}
+                      >
+                        <Button
+                          variant="contained"
+                          sx={{
+                            backgroundColor: "#21293D",
+                            boxShadow: "0px 3px 8px rgba(255, 255, 255, 0.3)",
+                            color: "white",
+                            marginRight: 2,
 
-                        fontSize: "0.8rem",
-                      }}
-                      onClick={() => handleFavorites(movieDetail)}
-                    >
-                      {isInFavList
-                        ? "Remove from favorites"
-                        : "Add to Favorites"}
-                    </Button>
-                    <Button
-                      variant="contained"
-                      sx={{
-                        backgroundColor: "#21293D",
-                        boxShadow: "0px 3px 8px rgba(255, 255, 255, 0.3)",
-                        color: "white",
-                        marginRight: 2,
-                        fontSize: "0.8rem",
-                      }}
-                      onClick={() => handleWatchLater(movieDetail)}
-                    >
-                      Watch later
-                    </Button>
-                    <Button
-                      variant="contained"
-                      onClick={() => navigateHome("/")}
-                      sx={{
-                        backgroundColor: "#21293D",
-                        boxShadow: "0px 3px 8px rgba(255, 255, 255, 0.3)",
-                        color: "white",
-                        marginRight: 1,
-                        fontSize: "0.8rem",
-                      }}
-                    >
-                      Go back to search
-                    </Button>
+                            fontSize: "0.8rem",
+                          }}
+                          onClick={() => handleFavorites(movieDetail)}
+                        >
+                          {isInFavList
+                            ? "Remove from favorites"
+                            : "Add to Favorites"}
+                        </Button>
+                        <Button
+                          variant="contained"
+                          sx={{
+                            backgroundColor: "#21293D",
+                            boxShadow: "0px 3px 8px rgba(255, 255, 255, 0.3)",
+                            color: "white",
+                            marginRight: 2,
+                            fontSize: "0.8rem",
+                          }}
+                          onClick={() => handleWatchLater(movieDetail)}
+                        >
+                          Watch later
+                        </Button>
+                        <Button
+                          variant="contained"
+                          onClick={() => navigateHome("/")}
+                          sx={{
+                            backgroundColor: "#21293D",
+                            boxShadow: "0px 3px 8px rgba(255, 255, 255, 0.3)",
+                            color: "white",
+                            marginRight: 1,
+                            fontSize: "0.8rem",
+                          }}
+                        >
+                          Go back to search
+                        </Button>
+                      </Box>
+                    </CardContent>
                   </Box>
-                </CardContent>
+                </Grid>
+              </Grid>
+            </Container>
+            {trailerUrl && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  margin: "70px 0px 50px 0px",
+                }}
+              >
+                <iframe
+                  width="560"
+                  height="315"
+                  src={trailerUrl}
+                  title="Trailer"
+                  allowFullScreen
+                  className="trailerMovie"
+                />
               </Box>
-            </Grid>
-          </Grid>
-        </Container>
-        {trailerUrl && (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              margin: "70px 0px 50px 0px",
-            }}
-          >
-            <iframe
-              width="560"
-              height="315"
-              src={trailerUrl}
-              title="Trailer"
-              allowFullScreen
-              className="trailerMovie"
-            />
+            )}
           </Box>
-        )}
-      </Box>
-      <Toaster />
+          <Toaster />
+        </>
+      )}
     </>
   );
 };

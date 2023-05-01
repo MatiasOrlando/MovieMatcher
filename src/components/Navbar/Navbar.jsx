@@ -93,6 +93,7 @@ const Navbar = () => {
             </Menu>
           </Box>
           <Typography
+            data-title-test="app-title"
             variant="h5"
             noWrap
             component="a"

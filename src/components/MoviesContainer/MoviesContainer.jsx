@@ -6,8 +6,7 @@ import { Toaster } from "react-hot-toast";
 
 const MoviesContainer = () => {
   const [dataMovies, setDataMovies] = useState([]);
-  const { movieQuerySearch, page, setPagination, pagination } =
-    useContext(context);
+  const { movieQuerySearch, page, setPagination } = useContext(context);
 
   useEffect(() => {
     const fetchDataMovies = async () => {
