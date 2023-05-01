@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { context } from "../Context/Context";
-import UserWatchLater from "../components/UserWatchLater/UserWatchLater";
+import UserSelection from "../components/UserSelection/UserSelection";
 
 const WatchLater = () => {
   const [userWatchLaterMovies, setUserWatchLaterMovies] = useState([]);
@@ -12,7 +12,7 @@ const WatchLater = () => {
     setUserWatchLaterMovies(allUserWatchLater);
   }, [userWatchLater]);
 
-  return <UserWatchLater userWatchLaterMovies={userWatchLaterMovies} />;
+  return <UserSelection movies={userWatchLaterMovies} type="watch list" />;
 };
 
 export default WatchLater;

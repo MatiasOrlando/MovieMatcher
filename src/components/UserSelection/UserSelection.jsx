@@ -1,13 +1,14 @@
 import React from "react";
 import MovieCard from "../MovieCard/MovieCard";
 
-const UserWatchLater = ({ userWatchLaterMovies }) => {
+const UserSelection = ({ movies, type }) => {
+  const title = type === "favorites" ? "My favorites list" : "My watch list";
   return (
     <>
       <h2 style={{ textAlign: "center", marginTop: "50px", color: "white" }}>
-        My watch list
+        {title}
       </h2>
-      {userWatchLaterMovies && userWatchLaterMovies.length >= 1 ? (
+      {movies && movies.length >= 1 ? (
         <div
           style={{
             display: "flex",
@@ -17,17 +18,17 @@ const UserWatchLater = ({ userWatchLaterMovies }) => {
             marginTop: "30px",
           }}
         >
-          {userWatchLaterMovies.map((movie) => {
+          {movies.map((movie) => {
             return <MovieCard movie={movie} key={movie.id} />;
           })}
         </div>
       ) : (
         <h3 style={{ textAlign: "center", marginTop: "20px", color: "white" }}>
-          Watch list is empty...
+          No {type} added yet..
         </h3>
       )}
     </>
   );
 };
 
-export default UserWatchLater;
+export default UserSelection;

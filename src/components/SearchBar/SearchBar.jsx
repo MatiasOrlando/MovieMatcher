@@ -11,7 +11,12 @@ const SearchBar = () => {
   return (
     <Paper
       component="form"
-      sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 440 }}
+      sx={{
+        p: "2px 4px",
+        display: "flex",
+        alignItems: "center",
+        width: { xs: 300, sm: 320, md: 440, lg: 640 },
+      }}
       onSubmit={handleSubmit}
     >
       <InputBase

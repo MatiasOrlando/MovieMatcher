@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
-import UserFavorites from "../components/UserFavorites/UserFavorites";
 import { context } from "../Context/Context";
+import UserSelection from "../components/UserSelection/UserSelection";
 
 const Favorites = () => {
   const [userFavoriteMovies, setUserFavoriteMovies] = useState([]);
@@ -10,7 +10,7 @@ const Favorites = () => {
     setUserFavoriteMovies(allUserFavorites);
   }, [userFavorites]);
 
-  return <UserFavorites userFavoriteMovies={userFavoriteMovies} />;
+  return <UserSelection movies={userFavoriteMovies} type="favorites" />;
 };
 
 export default Favorites;

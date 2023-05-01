@@ -94,7 +94,7 @@ const MovieCard = ({ movie }) => {
             {movie.release_date}
           </Typography>
         </CardContent>
-        <CardActions>
+        <CardActions sx={{ pl: "12px" }}>
           <div>
             <ToggleButtonGroup>
               <Tooltip

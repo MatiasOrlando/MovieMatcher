@@ -23,7 +23,7 @@ const AppPagination = () => {
         <Pagination
           onChange={handleChange}
           page={page}
-          count={5}
+          count={300}
           sx={{
             "& .MuiPaginationItem-root": {
               color: "white",
