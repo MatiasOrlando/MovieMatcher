@@ -1,6 +1,6 @@
 import axios from "axios";
-const baseUrl = import.meta.env.VITE_BASE_URL || process.env.BASE_URL;
-const apiKey = import.meta.env.VITE_API_KEY || process.env.API_KEY;
+const baseUrl = import.meta.env.VITE_BASE_URL;
+const apiKey = import.meta.env.VITE_API_KEY;
 
 export const fetchQueryMovies = (endpoint, params) => {
   const { searchTermValue } = params;

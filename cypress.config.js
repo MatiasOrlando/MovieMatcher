@@ -6,4 +6,7 @@ export default defineConfig({
       // implement node event listeners here
     },
   },
+  env: {
+    API_KEY: "3651041388931cf01228edbff2087680",
+  },
 });

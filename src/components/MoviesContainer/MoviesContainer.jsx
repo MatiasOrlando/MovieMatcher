@@ -41,9 +41,10 @@ const MoviesContainer = () => {
           marginInline: "50px",
           marginTop: "30px",
         }}
+        id="moviesContainer"
       >
-        {dataMovies.map((movie) => {
-          return <MovieCard key={movie.id} movie={movie} />;
+        {dataMovies.map((movie, i) => {
+          return <MovieCard key={movie.id} movie={movie} i={i} />;
         })}
       </Box>
       <Toaster />

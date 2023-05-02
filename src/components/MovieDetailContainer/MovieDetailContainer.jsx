@@ -121,6 +121,7 @@ const MovieDetailContainer = ({ id }) => {
                             md: "2rem",
                           },
                         }}
+                        data-test-movie-detail-title="detailTitle"
                       >
                         {movieDetail.title}
                       </Typography>
@@ -199,6 +200,7 @@ const MovieDetailContainer = ({ id }) => {
                         }}
                       >
                         <Button
+                          data-test-add-fav-btn="fav-btn"
                           variant="contained"
                           sx={{
                             backgroundColor: "#21293D",
@@ -211,7 +213,7 @@ const MovieDetailContainer = ({ id }) => {
                         >
                           {isInFavList
                             ? "Remove from favorites"
-                            : "Add to Favorites"}
+                            : "Add to favorites"}
                         </Button>
                         <Button
                           variant="contained"
@@ -260,6 +262,7 @@ const MovieDetailContainer = ({ id }) => {
                   title="Trailer"
                   allowFullScreen
                   className="trailerMovie"
+                  alt={movieDetail.title}
                 />
               </Box>
             )}

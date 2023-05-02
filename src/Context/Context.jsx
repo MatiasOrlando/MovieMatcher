@@ -67,6 +67,7 @@ const Context = ({ children }) => {
           background: "black",
           color: "white",
         },
+        className: "removeFav-toast-test",
       });
     } else {
       const newFavorites = [...userFavorites, movie];
@@ -79,6 +80,7 @@ const Context = ({ children }) => {
           background: "black",
           color: "white",
         },
+        className: "success-add-toast-test",
       });
     }
   };

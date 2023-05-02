@@ -18,6 +18,7 @@ const UserSelection = ({ movies, type }) => {
             marginInline: "50px",
             marginTop: "30px",
           }}
+          data-test-fav-movies="movies-fav"
         >
           {movies.map((movie) => {
             return <MovieCard movie={movie} key={movie.id} />;

@@ -19,7 +19,7 @@ import Tooltip from "@mui/material/Tooltip";
 import { Toaster } from "react-hot-toast";
 import { pathImg } from "../../utils/images-url";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, i }) => {
   const { pathname } = useLocation();
   const pathnameClean = pathname.slice(1);
   const imgMovieCard = `${pathImg}/w300`;
@@ -35,7 +35,6 @@ const MovieCard = ({ movie }) => {
   useEffect(() => {
     setIsStarred(userFavorites.some((userMovie) => userMovie.id === movie.id));
   }, [movie.id, userFavorites]);
-
   return (
     <>
       <Card
@@ -53,7 +52,7 @@ const MovieCard = ({ movie }) => {
             border: "3px solid white",
           },
         }}
-        data-test-query-search="movie-card"
+        data-test-query-search="movie-card-search"
       >
         <Link to={`/movies/${movie.id}`}>
           <CardMedia
@@ -67,7 +66,6 @@ const MovieCard = ({ movie }) => {
             }
           />
         </Link>
-
         <CardContent>
           <Typography
             gutterBottom
@@ -89,10 +87,16 @@ const MovieCard = ({ movie }) => {
               minHeight: "2.4em",
             }}
             component="div"
+            data-test-movie-card-title="moviecardtitle"
+            data-test-star-card-title={i}
           >
             {movie.title}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            data-test-card-release-date={i}
+          >
             {movie.release_date}
           </Typography>
         </CardContent>
@@ -111,6 +115,7 @@ const MovieCard = ({ movie }) => {
                     width: "auto",
                     height: "auto",
                   }}
+                  data-test-star-fav={i}
                 >
                   {isStarred ? (
                     <StarIcon color="warning" sx={{ opacity: 0.5 }} />
