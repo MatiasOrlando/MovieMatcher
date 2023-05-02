@@ -3,6 +3,7 @@ import MovieCard from "../MovieCard/MovieCard";
 import { context } from "../../Context/Context";
 import { fetchTrendyMovies } from "../../services/api";
 import { Toaster } from "react-hot-toast";
+import { Box } from "@mui/material";
 
 const MoviesContainer = () => {
   const [dataMovies, setDataMovies] = useState([]);
@@ -24,7 +25,6 @@ const MoviesContainer = () => {
         }
       } catch (error) {
         console.error(error);
-        setDataMovies([]);
         setPagination(false);
       }
     };
@@ -33,7 +33,7 @@ const MoviesContainer = () => {
 
   return (
     <>
-      <div
+      <Box
         style={{
           display: "flex",
           flexWrap: "wrap",
@@ -45,7 +45,7 @@ const MoviesContainer = () => {
         {dataMovies.map((movie) => {
           return <MovieCard key={movie.id} movie={movie} />;
         })}
-      </div>
+      </Box>
       <Toaster />
     </>
   );

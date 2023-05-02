@@ -1,12 +1,24 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
+import HighlightOffSharpIcon from "@mui/icons-material/HighlightOffSharp";
 import SearchIcon from "@mui/icons-material/Search";
 import { context } from "../../Context/Context";
 
 const SearchBar = () => {
-  const { setSearchTerm, handleSubmit } = useContext(context);
+  const { setSearchTerm, handleSubmit, searchTerm } = useContext(context);
+  const [showClearIcon, setShowClearIcon] = useState(false);
+
+  const handleClearInput = () => {
+    setSearchTerm("");
+    setShowClearIcon(false);
+  };
+
+  const handleInputChange = (e) => {
+    setSearchTerm(e.target.value);
+    setShowClearIcon(e.target.value.trim() !== "");
+  };
 
   return (
     <Paper
@@ -23,18 +35,17 @@ const SearchBar = () => {
       <InputBase
         sx={{ ml: 1, flex: 1 }}
         placeholder="Search a movie..."
-        onChange={(e) => {
-          setSearchTerm(e.target.value);
-        }}
+        onChange={handleInputChange}
+        value={searchTerm}
       />
-      <IconButton
-        type="submit"
-        sx={{ p: "10px" }}
-        aria-label="search"
-        onSubmit={handleSubmit}
-      >
+      <IconButton type="submit" aria-label="search" onSubmit={handleSubmit}>
         <SearchIcon />
       </IconButton>
+      {showClearIcon && (
+        <IconButton onClick={() => handleClearInput()}>
+          <HighlightOffSharpIcon />
+        </IconButton>
+      )}
     </Paper>
   );
 };

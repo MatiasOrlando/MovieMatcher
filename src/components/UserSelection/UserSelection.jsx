@@ -1,5 +1,6 @@
 import React from "react";
 import MovieCard from "../MovieCard/MovieCard";
+import { Box } from "@mui/material";
 
 const UserSelection = ({ movies, type }) => {
   const title = type === "favorites" ? "My favorites list" : "My watch list";
@@ -9,8 +10,8 @@ const UserSelection = ({ movies, type }) => {
         {title}
       </h2>
       {movies && movies.length >= 1 ? (
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
             flexWrap: "wrap",
             justifyContent: "space-evenly",
@@ -21,7 +22,7 @@ const UserSelection = ({ movies, type }) => {
           {movies.map((movie) => {
             return <MovieCard movie={movie} key={movie.id} />;
           })}
-        </div>
+        </Box>
       ) : (
         <h3 style={{ textAlign: "center", marginTop: "20px", color: "white" }}>
           No {type} added yet..

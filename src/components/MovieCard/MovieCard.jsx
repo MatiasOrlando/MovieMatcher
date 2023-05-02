@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { Box } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -16,11 +17,12 @@ import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import { Toaster } from "react-hot-toast";
+import { pathImg } from "../../utils/images-url";
 
 const MovieCard = ({ movie }) => {
   const { pathname } = useLocation();
   const pathnameClean = pathname.slice(1);
-  const pathImg = "https://image.tmdb.org/t/p/w300";
+  const imgMovieCard = `${pathImg}/w300`;
   const [isStarred, setIsStarred] = useState(false);
 
   const {
@@ -44,7 +46,6 @@ const MovieCard = ({ movie }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          boxShadow: "0px 10px 8px rgba(0, 0, 0, 0.2)",
           transform: "perspective(1000px) rotateY(0deg)",
           transition: "transform 0.5s",
           "&:hover": {
@@ -61,7 +62,7 @@ const MovieCard = ({ movie }) => {
             height="360"
             image={
               movie.poster_path
-                ? `${pathImg}${movie.poster_path}`
+                ? `${imgMovieCard}${movie.poster_path}`
                 : noImageAvailable
             }
           />
@@ -96,7 +97,7 @@ const MovieCard = ({ movie }) => {
           </Typography>
         </CardContent>
         <CardActions sx={{ pl: "12px" }}>
-          <div>
+          <Box>
             <ToggleButtonGroup>
               <Tooltip
                 title={isStarred ? "Remove from favorites" : "Add to favorites"}
@@ -112,19 +113,19 @@ const MovieCard = ({ movie }) => {
                   }}
                 >
                   {isStarred ? (
-                    <StarIcon sx={{ opacity: 0.5 }} />
+                    <StarIcon color="warning" sx={{ opacity: 0.5 }} />
                   ) : (
                     <StarBorderIcon sx={{ opacity: 0.5 }} />
                   )}
                 </ToggleButton>
               </Tooltip>
             </ToggleButtonGroup>
-          </div>
-          <div>
+          </Box>
+          <Box>
             {pathnameClean !== "watchlater" ? (
               <ToggleButtonGroup>
                 <ToggleButton
-                  value={""}
+                  value=""
                   style={{
                     border: "none",
                     padding: 0,
@@ -162,20 +163,20 @@ const MovieCard = ({ movie }) => {
                 </ToggleButton>{" "}
               </ToggleButtonGroup>
             )}
-          </div>
-          <div
-            style={{
+          </Box>
+          <Box
+            sx={{
               display: "flex",
               justifyContent: "space-between",
               width: "200px",
             }}
           >
-            <div style={{ maxHeight: "20%" }}>
+            <Box sx={{ maxHeight: "20%" }}>
               <Link to={`/movies/${movie.id}`}>
                 <Button size="small">Learn More</Button>
               </Link>
-            </div>
-          </div>
+            </Box>
+          </Box>
         </CardActions>
       </Card>
       <Toaster />

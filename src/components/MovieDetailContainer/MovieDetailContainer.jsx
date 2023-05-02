@@ -14,14 +14,15 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import { pathImg } from "../../utils/images-url";
 
 const MovieDetailContainer = ({ id }) => {
   const [movieDetail, setMovieDetail] = useState({});
   const [trailerUrl, setTrailerUrl] = useState("");
   const [isInFavList, setIsInFavList] = useState(false);
   const [isErr, setIsErr] = useState(false);
-  const pathImg = "https://image.tmdb.org/t/p/w342";
   const navigateHome = useNavigate();
+  const imgMovieDetail = `${pathImg}/w342`;
   const { handleFavorites, handleWatchLater, userFavorites } =
     useContext(context);
 
@@ -36,8 +37,8 @@ const MovieDetailContainer = ({ id }) => {
         setMovieDetail(dataMovie.data);
       };
       fetchDataMovie();
-      const isFavorite = userFavorites.find((movie) => movie.id == id);
-      setIsInFavList(isFavorite !== undefined);
+      const isFavoriteMovie = userFavorites.find((movie) => movie.id == id);
+      setIsInFavList(isFavoriteMovie !== undefined);
     } catch (error) {
       console.log(error);
       setIsErr(true);
@@ -69,7 +70,16 @@ const MovieDetailContainer = ({ id }) => {
   return (
     <>
       {isErr ? (
-        <div> No data available </div>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "2.5rem",
+            color: "white",
+          }}
+        >
+          <h3>No movie data available, please try again later..</h3>
+        </Box>
       ) : (
         <>
           <Box sx={{ minHeight: "80vh" }}>
@@ -80,7 +90,7 @@ const MovieDetailContainer = ({ id }) => {
                     component="img"
                     image={
                       movieDetail.poster_path
-                        ? `${pathImg}${movieDetail.poster_path}`
+                        ? `${imgMovieDetail}${movieDetail.poster_path}`
                         : noImageAvailable
                     }
                     alt={movieDetail.title}
@@ -143,7 +153,7 @@ const MovieDetailContainer = ({ id }) => {
                         {movieDetail.overview}
                       </Typography>
                       <Box sx={{ mt: 1 }}>
-                        <div>
+                        <Box>
                           <Typography variant="body1" sx={{ color: "white" }}>
                             <strong>Genres:</strong>
                           </Typography>
@@ -161,7 +171,7 @@ const MovieDetailContainer = ({ id }) => {
                                 }}
                               />
                             ))}
-                        </div>
+                        </Box>
                         <Typography
                           variant="body1"
                           sx={{
@@ -195,7 +205,6 @@ const MovieDetailContainer = ({ id }) => {
                             boxShadow: "0px 3px 8px rgba(255, 255, 255, 0.3)",
                             color: "white",
                             marginRight: 2,
-
                             fontSize: "0.8rem",
                           }}
                           onClick={() => handleFavorites(movieDetail)}

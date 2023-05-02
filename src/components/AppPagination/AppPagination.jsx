@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Pagination from "@mui/material/Pagination";
+import { Box } from "@mui/material";
 import { context } from "../../Context/Context";
-import { LogoDev } from "@mui/icons-material";
 
 const AppPagination = () => {
   const { setPage, page, pagination } = useContext(context);
@@ -12,8 +12,8 @@ const AppPagination = () => {
   };
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         display: "flex",
         justifyContent: "center",
         marginBottom: "20px",
@@ -48,7 +48,7 @@ const AppPagination = () => {
           }}
         />
       )}
-    </div>
+    </Box>
   );
 };
 

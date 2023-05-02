@@ -35,7 +35,7 @@ const Context = ({ children }) => {
         searchTermValue: searchTerm,
       });
       setMovieQuerySearch(movieQuery.data.results);
-      if (!movieQuery.data.results.length) {
+      if (!movieQuery.data.results.length && searchTerm !== "") {
         toast.error("No matches found, please try again", {
           duration: 1000,
           style: {
@@ -125,6 +125,7 @@ const Context = ({ children }) => {
   };
 
   const valueContext = {
+    searchTerm,
     setSearchTerm,
     handleSubmit,
     movieQuerySearch,
