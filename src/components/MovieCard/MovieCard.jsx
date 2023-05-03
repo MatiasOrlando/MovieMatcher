@@ -53,7 +53,8 @@ const MovieCard = ({ movie, i }) => {
             border: "3px solid white",
           },
         }}
-        data-test-query-search="movie-card-search"
+        data-test-movie-card={`movie-card-${i}`}
+        data-test-all-cards="all-movie-cards"
       >
         <Link to={`/movies/${movie.id}`}>
           <CardMedia
@@ -89,7 +90,7 @@ const MovieCard = ({ movie, i }) => {
             }}
             component="div"
             data-test-movie-card-title="moviecardtitle"
-            data-test-star-card-title={i}
+            data-test-card-title={i}
           >
             {movie.title}
           </Typography>

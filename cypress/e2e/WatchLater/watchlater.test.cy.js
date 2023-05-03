@@ -10,7 +10,7 @@ describe("Access to watch later section", () => {
 describe("Handle watch later function on detail container", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173/");
-    cy.get("[data-test-query-search='movie-card-search']").first().click();
+    cy.get("[data-test-movie-card='movie-card-4']").first().click();
     cy.get("[data-test-watch-btn='watch-btn']").click();
     cy.get("[data-test-movie-detail-title='detailTitle']")
       .invoke("text")
@@ -28,14 +28,14 @@ describe("Handle watch later function on detail container", () => {
           });
       });
   });
-  it("adds a movie to watch later list when clicked for the first time", () => {
+  it("Adds a movie to watch later list when clicked for the first time", () => {
     cy.get(".success-watch-toast-test").should("be.visible");
     cy.get(".success-watch-toast-test").contains(
       "Successfully added to watch list"
     );
   });
 
-  it("sends a toast error message when clicked for the second time if it already exists avoiding duplicates", () => {
+  it("Sends a toast error message when clicked for the second time if it already exists avoiding duplicates", () => {
     const initialLength = 1;
     cy.get("[data-test-watch-btn='watch-btn']").click();
     cy.get("@titleMovie").then(() => {
@@ -61,7 +61,7 @@ describe("Handle watch later function on movie card", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173/");
     cy.get("[data-test-watch-later=3]").click();
-    cy.get("[data-test-star-card-title=3]")
+    cy.get("[data-test-card-title=3]")
       .invoke("text")
       .as("titleMovie")
       .then((text) => {
@@ -77,13 +77,13 @@ describe("Handle watch later function on movie card", () => {
           });
       });
   });
-  it("adds a movie to watch later list when clicked for the first time", () => {
+  it("Adds a movie to watch later list when clicked for the first time", () => {
     cy.get(".success-watch-toast-test").should("be.visible");
     cy.get(".success-watch-toast-test").contains(
       "Successfully added to watch list"
     );
   });
-  it("sends a toast error message when clicked for the second time if it already exists avoiding duplicates", () => {
+  it("Sends a toast error message when clicked for the second time if it already exists avoiding duplicates", () => {
     const initialLength = 1;
     cy.get("[data-test-watch-later=3]").click();
     cy.get("@titleMovie").then(() => {
@@ -105,66 +105,75 @@ describe("Handle watch later function on movie card", () => {
   });
 });
 
-describe("Displays user's watch later list in Watch laters page", () => {
-  it("should render the same content as stored in localStorage", () => {
-    cy.visit("http://localhost:5173/");
-    cy.get("[data-test-star-fav=0]").first().click();
-    cy.get("[data-test-star-fav=1]").first().click();
-    cy.get("[data-test-star-card-title=0]")
-      .invoke("text")
-      .then((text) => {
-        cy.window()
-          .its("localStorage.userFavorites")
-          .then((storedArrayFavorites) => {
-            const arrayFavorites = JSON.parse(storedArrayFavorites) || [];
-            const movieExists = arrayFavorites.find(
-              (movie) => movie.title === text
-            );
-            expect(movieExists).to.exist;
-          });
-      });
-    cy.get("[data-test-star-card-title=1]")
-      .invoke("text")
-      .then((text) => {
-        cy.window()
-          .its("localStorage.userFavorites")
-          .then((storedArrayFavorites) => {
-            const arrayFavorites = JSON.parse(storedArrayFavorites) || [];
-            const movieExists = arrayFavorites.find(
-              (movie) => movie.title === text
-            );
-            expect(movieExists).to.exist;
-          });
-      });
-    cy.visit("http://localhost:5173/favorites");
-    cy.contains("My favorites list");
+describe("Displays user's watch later list in Watch later page", () => {
+  it("Should render the same content as stored in localStorage", () => {
+    cy.visit("http://localhost:5173/watchlater");
+    cy.get("[data-test-selection-user='user-selection']").contains(
+      "No watch list added yet.."
+    );
 
-    // Verification both arrays Localstorage and Children rendered have some length
-    cy.get("[data-test-fav-movies='movies-fav']").then(($el) => {
+    cy.visit("http://localhost:5173/");
+    cy.get("[data-test-watch-later='5']").first().click();
+    cy.get("[data-test-watch-later='6']").first().click();
+    cy.get("[data-test-card-title=5]")
+      .invoke("text")
+      .then((text) => {
+        cy.window()
+          .its("localStorage.userWatchLater")
+          .then((storedArrayWatchLater) => {
+            const arrayWatchLater = JSON.parse(storedArrayWatchLater) || [];
+            const movieExists = arrayWatchLater.find(
+              (movie) => movie.title === text
+            );
+            expect(movieExists).to.exist;
+          });
+      });
+    cy.get("[data-test-card-title=6]")
+      .invoke("text")
+      .then((text) => {
+        cy.window()
+          .its("localStorage.userWatchLater")
+          .then((storedArrayWatchLater) => {
+            const arrayWatchLater = JSON.parse(storedArrayWatchLater) || [];
+            const movieExists = arrayWatchLater.find(
+              (movie) => movie.title === text
+            );
+            expect(movieExists).to.exist;
+          });
+      });
+    cy.visit("http://localhost:5173/watchlater");
+    cy.contains("My watch list");
+    cy.get("[data-test-selection-user='user-selection']").should("not.exist");
+    // Verification both arrays Localstorage and  Movie's Container children rendered have same length
+    cy.get("[data-test-user-movies='movies-user']").then(($el) => {
       const children = $el.children();
       const movieCards = Array.from(children).filter((child) =>
         child.classList.contains("MuiCard-root")
       );
+      expect(movieCards.length).to.equal(2);
       cy.window()
-        .its("localStorage.userFavorites")
-        .then((storedArrayfavorites) => {
-          expect(JSON.parse(storedArrayfavorites).length).to.equal(
+        .its("localStorage.userWatchLater")
+        .then((storedArrayWatchLater) => {
+          expect(JSON.parse(storedArrayWatchLater).length).to.equal(
             movieCards.length
           );
-          // Verification both arrays Localstorage and Children rendered have some content of Movie titles
-          const favMoviesLocal = JSON.parse(storedArrayfavorites).map(
+          // Verification both arrays Localstorage and Children rendered have same content of Movie titles
+          const watchLaterMoviesLocal = JSON.parse(storedArrayWatchLater).map(
             (movie) => movie.title
           );
-          const favMoviesPage = [];
+          const watchLaterMoviesInPage = [];
           movieCards.forEach((card) => {
             cy.wrap(card)
               .find("[data-test-movie-card-title]")
               .invoke("text")
               .then((cardTitle) => {
-                favMoviesPage.push(cardTitle);
+                watchLaterMoviesInPage.push(cardTitle);
               });
           });
-          cy.wrap(favMoviesPage).should("deep.equal", favMoviesLocal);
+          cy.wrap(watchLaterMoviesInPage).should(
+            "deep.equal",
+            watchLaterMoviesLocal
+          );
         });
     });
   });

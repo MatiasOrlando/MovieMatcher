@@ -105,6 +105,7 @@ const MovieDetailContainer = ({ id }) => {
                       objectFit: "cover",
                       textAlign: "center",
                     }}
+                    data-test-movie-detail-img="movie-image"
                   />
                 </Grid>
                 <Grid item xs={12} md={7}>
@@ -150,6 +151,7 @@ const MovieDetailContainer = ({ id }) => {
                             md: "1rem",
                           },
                         }}
+                        data-test-movie-overview="movie-detail-overview"
                       >
                         {movieDetail.overview}
                       </Typography>
@@ -239,6 +241,7 @@ const MovieDetailContainer = ({ id }) => {
                             marginRight: 1,
                             fontSize: "0.8rem",
                           }}
+                          data-test-btn-goback={`goback-btn-${id}`}
                         >
                           Go back to search
                         </Button>

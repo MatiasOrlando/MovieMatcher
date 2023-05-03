@@ -16,7 +16,7 @@ describe("Search movies", () => {
       .should("have.value", inputText);
     cy.get("form").submit();
     cy.wait("@getQueryMovies").its("response.statusCode").should("eq", 200);
-    cy.get("[data-test-query-search='movie-card-search']")
+    cy.get("[data-test-all-cards='all-movie-cards']")
       .should("have.length.above", 0)
       .each(($card) => {
         cy.wrap($card).should("contain.text", inputText);
@@ -35,7 +35,7 @@ describe("Search movies", () => {
       expect(data.response.statusCode).to.eq(200);
       expect(data.response.body).to.have.property("total_results", 0);
     });
-    cy.get("[data-test-query-search='movie-card-search']")
+    cy.get("[data-test-all-cards='all-movie-cards']")
       .should("have.length.above", 0)
       .each(($card) => {
         cy.wrap($card).should("not.contain.text", inputText);

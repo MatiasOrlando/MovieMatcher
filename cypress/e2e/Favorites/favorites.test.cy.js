@@ -10,9 +10,9 @@ describe("Access to favorites section", () => {
 describe("Handle favorites function on detail container", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173/");
-    cy.get("[data-test-query-search='movie-card-search']").first().click();
+    cy.get("[data-test-movie-card='movie-card-15']").first().click();
   });
-  it("adds a movie to favorites when clicked for the first time", () => {
+  it("Adds a movie to favorites when clicked for the first time", () => {
     cy.get("[data-test-add-fav-btn='fav-btn']").should(
       "contain.text",
       "Add to favorites"
@@ -38,7 +38,7 @@ describe("Handle favorites function on detail container", () => {
     );
   });
 
-  it("removes a movie from favorites when clicked for the second time", () => {
+  it("Removes a movie from favorites when clicked for the second time", () => {
     cy.get("[data-test-add-fav-btn='fav-btn']").click();
     cy.get("[data-test-add-fav-btn='fav-btn']").should(
       "contain.text",
@@ -69,9 +69,9 @@ describe("Handle favorites function on movie card", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173/");
   });
-  it("adds a movie to favorites when clicked for the first time", () => {
+  it("Adds a movie to favorites when clicked for the first time", () => {
     cy.get("[data-test-star-fav=0]").first().click();
-    cy.get("[data-test-star-card-title=0]")
+    cy.get("[data-test-card-title=0]")
       .invoke("text")
       .then((text) => {
         cy.window()
@@ -91,10 +91,10 @@ describe("Handle favorites function on movie card", () => {
     );
   });
 
-  it("removes a movie from favorites when clicked for the second time", () => {
+  it("Removes a movie from favorites when clicked for the second time", () => {
     cy.get("[data-test-star-fav=0]").first().click();
     cy.get("[data-test-star-fav=0]").first().should("be.visible").click();
-    cy.get("[data-test-star-card-title=0]")
+    cy.get("[data-test-card-title=0]")
       .invoke("text")
       .then((text) => {
         cy.window()
@@ -115,11 +115,16 @@ describe("Handle favorites function on movie card", () => {
 });
 
 describe("Displays user's favorites in Favorites page", () => {
-  it("should render the same content as stored in localStorage", () => {
+  it("Should render the same content as stored in localStorage", () => {
+    cy.visit("http://localhost:5173/favorites");
+    cy.get("[data-test-selection-user='user-selection']").contains(
+      "No favorites added yet.."
+    );
+
     cy.visit("http://localhost:5173/");
-    cy.get("[data-test-star-fav=0]").first().click();
-    cy.get("[data-test-star-fav=1]").first().click();
-    cy.get("[data-test-star-card-title=0]")
+    cy.get("[data-test-star-fav=2]").first().click();
+    cy.get("[data-test-star-fav=3]").first().click();
+    cy.get("[data-test-card-title=2]")
       .invoke("text")
       .then((text) => {
         cy.window()
@@ -132,7 +137,7 @@ describe("Displays user's favorites in Favorites page", () => {
             expect(movieExists).to.exist;
           });
       });
-    cy.get("[data-test-star-card-title=1]")
+    cy.get("[data-test-card-title=3]")
       .invoke("text")
       .then((text) => {
         cy.window()
@@ -147,33 +152,34 @@ describe("Displays user's favorites in Favorites page", () => {
       });
     cy.visit("http://localhost:5173/favorites");
     cy.contains("My favorites list");
-
-    // Verification both arrays Localstorage and Children rendered have some length
-    cy.get("[data-test-fav-movies='movies-fav']").then(($el) => {
+    cy.get("[data-test-selection-user='user-selection']").should("not.exist");
+    // Verification both arrays Localstorage and  Movie's Container children rendered have same length
+    cy.get("[data-test-user-movies='movies-user']").then(($el) => {
       const children = $el.children();
       const movieCards = Array.from(children).filter((child) =>
         child.classList.contains("MuiCard-root")
       );
+      expect(movieCards.length).to.equal(2);
       cy.window()
         .its("localStorage.userFavorites")
         .then((storedArrayfavorites) => {
           expect(JSON.parse(storedArrayfavorites).length).to.equal(
             movieCards.length
           );
-          // Verification both arrays Localstorage and Children rendered have some content of Movie titles
+          // Verification both arrays Localstorage and Children rendered have same content of Movie titles
           const favMoviesLocal = JSON.parse(storedArrayfavorites).map(
             (movie) => movie.title
           );
-          const favMoviesPage = [];
+          const favMoviesInPage = [];
           movieCards.forEach((card) => {
             cy.wrap(card)
               .find("[data-test-movie-card-title]")
               .invoke("text")
               .then((cardTitle) => {
-                favMoviesPage.push(cardTitle);
+                favMoviesInPage.push(cardTitle);
               });
           });
-          cy.wrap(favMoviesPage).should("deep.equal", favMoviesLocal);
+          cy.wrap(favMoviesInPage).should("deep.equal", favMoviesLocal);
         });
     });
   });

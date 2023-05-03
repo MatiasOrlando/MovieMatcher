@@ -18,14 +18,17 @@ const UserSelection = ({ movies, type }) => {
             marginInline: "50px",
             marginTop: "30px",
           }}
-          data-test-fav-movies="movies-fav"
+          data-test-user-movies="movies-user"
         >
           {movies.map((movie) => {
             return <MovieCard movie={movie} key={movie.id} />;
           })}
         </Box>
       ) : (
-        <h3 style={{ textAlign: "center", marginTop: "20px", color: "white" }}>
+        <h3
+          style={{ textAlign: "center", marginTop: "20px", color: "white" }}
+          data-test-selection-user="user-selection"
+        >
           No {type} added yet..
         </h3>
       )}
