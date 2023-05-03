@@ -15,7 +15,7 @@ const SearchBar = () => {
     setShowClearIcon(false);
   };
 
-  const handleInputChange = (e) => {
+  const handleChange = (e) => {
     setSearchTerm(e.target.value);
     setShowClearIcon(e.target.value.trim() !== "");
   };
@@ -35,7 +35,7 @@ const SearchBar = () => {
       <InputBase
         sx={{ ml: 1, flex: 1 }}
         placeholder="Search a movie..."
-        onChange={handleInputChange}
+        onChange={handleChange}
         value={searchTerm}
       />
       <IconButton type="submit" aria-label="search" onSubmit={handleSubmit}>

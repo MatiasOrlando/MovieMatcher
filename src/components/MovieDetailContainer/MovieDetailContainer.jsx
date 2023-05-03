@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
+import { context } from "../../Context/Context";
 import { useNavigate } from "react-router-dom";
 import noImageAvailable from "../../assets/noimg.jpeg";
 import { fetchSingleMovie, fetchMovieTrailer } from "../../services/api";
-import { context } from "../../Context/Context";
 import { Toaster } from "react-hot-toast";
 import {
   Box,
@@ -21,10 +21,10 @@ const MovieDetailContainer = ({ id }) => {
   const [trailerUrl, setTrailerUrl] = useState("");
   const [isInFavList, setIsInFavList] = useState(false);
   const [isErr, setIsErr] = useState(false);
-  const navigateHome = useNavigate();
-  const imgMovieDetail = `${pathImg}/w342`;
   const { handleFavorites, handleWatchLater, userFavorites } =
     useContext(context);
+  const navigateHome = useNavigate();
+  const imgMovieDetail = `${pathImg}/w342`;
 
   useEffect(() => {
     try {

@@ -10,21 +10,20 @@ const Context = ({ children }) => {
   const [userFavorites, setUserFavorites] = useState([]);
   const [userWatchLater, setUserWatchLater] = useState([]);
   const [movieQuerySearch, setMovieQuerySearch] = useState([]);
-  const [isStarred, setIsStarred] = useState(false);
   const [pagination, setPagination] = useState(false);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    const storedFavorites = localStorage.getItem("userFavorites");
-    if (storedFavorites) {
-      setUserFavorites(JSON.parse(storedFavorites));
+    const storedLocalFavorites = localStorage.getItem("userFavorites");
+    if (storedLocalFavorites) {
+      setUserFavorites(JSON.parse(storedLocalFavorites));
     }
   }, []);
 
   useEffect(() => {
-    const storedWatchLater = localStorage.getItem("userWatchLater");
-    if (storedWatchLater) {
-      setUserWatchLater(JSON.parse(storedWatchLater));
+    const storedLocalWatchLater = localStorage.getItem("userWatchLater");
+    if (storedLocalWatchLater) {
+      setUserWatchLater(JSON.parse(storedLocalWatchLater));
     }
   }, []);
 
@@ -51,16 +50,16 @@ const Context = ({ children }) => {
   };
 
   const handleFavorites = (movie) => {
-    const isAlreadyFavorited = userFavorites.find(
+    const isFavMovie = userFavorites.find(
       (userMovie) => userMovie.id === movie.id
     );
-    if (isAlreadyFavorited) {
+    if (isFavMovie) {
       const newFavorites = userFavorites.filter(
         (userMovie) => userMovie.id !== movie.id
       );
       localStorage.setItem("userFavorites", JSON.stringify(newFavorites));
       setUserFavorites(newFavorites);
-      setIsStarred(false);
+
       toast.error("Removed from favorites", {
         duration: "100",
         style: {
@@ -73,7 +72,7 @@ const Context = ({ children }) => {
       const newFavorites = [...userFavorites, movie];
       localStorage.setItem("userFavorites", JSON.stringify(newFavorites));
       setUserFavorites(newFavorites);
-      setIsStarred(true);
+
       toast.success("Successfully added to favorites", {
         duration: "100",
         style: {
@@ -135,8 +134,6 @@ const Context = ({ children }) => {
     setUserFavorites,
     userWatchLater,
     setUserWatchLater,
-    setIsStarred,
-    isStarred,
     handleFavorites,
     handleWatchLater,
     handleDeleteWatchLater,

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import MovieCard from "../MovieCard/MovieCard";
 import { context } from "../../Context/Context";
+import MovieCard from "../MovieCard/MovieCard";
 import { fetchTrendyMovies } from "../../services/api";
 import { Toaster } from "react-hot-toast";
 import { Box } from "@mui/material";
 
 const MoviesContainer = () => {
-  const [dataMovies, setDataMovies] = useState([]);
   const { movieQuerySearch, page, setPagination } = useContext(context);
+  const [dataMovies, setDataMovies] = useState([]);
 
   useEffect(() => {
     const fetchDataMovies = async () => {
@@ -34,7 +34,7 @@ const MoviesContainer = () => {
   return (
     <>
       <Box
-        style={{
+        sx={{
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "space-evenly",

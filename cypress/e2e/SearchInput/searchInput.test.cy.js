@@ -4,18 +4,18 @@ describe("Search movies", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173/");
   });
-  it("Displays search results for valid input", () => {
+  it("Displays search results for valid input value", () => {
     const inputText = "Avengers";
     cy.intercept(
       "GET",
       `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${inputText}`
-    ).as("getMovies");
+    ).as("getQueryMovies");
     cy.get("input")
       .should("be.visible")
       .type(inputText)
       .should("have.value", inputText);
     cy.get("form").submit();
-    cy.wait("@getMovies").its("response.statusCode").should("eq", 200);
+    cy.wait("@getQueryMovies").its("response.statusCode").should("eq", 200);
     cy.get("[data-test-query-search='movie-card-search']")
       .should("have.length.above", 0)
       .each(($card) => {
@@ -23,17 +23,17 @@ describe("Search movies", () => {
       });
   });
 
-  it("Displays no results message for invalid input", () => {
-    const inputText = "abcdefghijk";
+  it("Displays no results message for invalid input and check actual cards do not match search criteria", () => {
+    const inputText = "aktpzjtlm";
     cy.intercept(
       "GET",
       `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${inputText}`
-    ).as("getMovies");
+    ).as("getQueryMovies");
     cy.get("input").type(inputText).should("have.value", inputText);
     cy.get("form").submit();
-    cy.wait("@getMovies").then((interception) => {
-      expect(interception.response.statusCode).to.eq(200);
-      expect(interception.response.body).to.have.property("total_results", 0);
+    cy.wait("@getQueryMovies").then((data) => {
+      expect(data.response.statusCode).to.eq(200);
+      expect(data.response.body).to.have.property("total_results", 0);
     });
     cy.get("[data-test-query-search='movie-card-search']")
       .should("have.length.above", 0)

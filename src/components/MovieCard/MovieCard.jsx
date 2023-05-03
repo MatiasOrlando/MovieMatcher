@@ -23,7 +23,7 @@ const MovieCard = ({ movie, i }) => {
   const { pathname } = useLocation();
   const pathnameClean = pathname.slice(1);
   const imgMovieCard = `${pathImg}/w300`;
-  const [isStarred, setIsStarred] = useState(false);
+  const [isStarOn, setIsStarOn] = useState(false);
 
   const {
     userFavorites,
@@ -33,8 +33,9 @@ const MovieCard = ({ movie, i }) => {
   } = useContext(context);
 
   useEffect(() => {
-    setIsStarred(userFavorites.some((userMovie) => userMovie.id === movie.id));
+    setIsStarOn(userFavorites.some((userMovie) => userMovie.id === movie.id));
   }, [movie.id, userFavorites]);
+
   return (
     <>
       <Card
@@ -57,7 +58,7 @@ const MovieCard = ({ movie, i }) => {
         <Link to={`/movies/${movie.id}`}>
           <CardMedia
             component="img"
-            alt="green iguana"
+            alt={movie.title}
             height="360"
             image={
               movie.poster_path
@@ -104,10 +105,10 @@ const MovieCard = ({ movie, i }) => {
           <Box>
             <ToggleButtonGroup>
               <Tooltip
-                title={isStarred ? "Remove from favorites" : "Add to favorites"}
+                title={isStarOn ? "Remove from favorites" : "Add to favorites"}
               >
                 <ToggleButton
-                  value={isStarred}
+                  value={isStarOn}
                   onClick={() => handleFavorites(movie)}
                   style={{
                     border: "none",
@@ -117,7 +118,7 @@ const MovieCard = ({ movie, i }) => {
                   }}
                   data-test-star-fav={i}
                 >
-                  {isStarred ? (
+                  {isStarOn ? (
                     <StarIcon color="warning" sx={{ opacity: 0.5 }} />
                   ) : (
                     <StarBorderIcon sx={{ opacity: 0.5 }} />
