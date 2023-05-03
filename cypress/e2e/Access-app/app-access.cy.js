@@ -41,13 +41,23 @@ describe("Access to app", () => {
   });
 });
 
-describe("Access movie detail", () => {
+describe.only("Access movie detail", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173/");
-    cy.get("[data-test-movie-card='movie-card-10']").first().click();
   });
   it("Should visit the app, click on a card and display movie detail", () => {
-    cy.get("[data-test-movie-detail-title='detailTitle']").should("exist");
+    cy.get("[data-test-movie-card='movie-card-10']")
+      .invoke("text")
+      .as("MovieTitle");
+    cy.get("[data-test-movie-card='movie-card-10']").first().click();
+    cy.get("[data-test-movie-detail-title='detailTitle']")
+      .should("exist")
+      .invoke("text")
+      .then((text) => {
+        cy.get("@MovieTitle").then((movieTitle) => {
+          expect(text).to.contain(movieTitle);
+        });
+      });
     cy.get("[data-test-watch-btn='watch-btn']")
       .should("exist")
       .should("be.visible");
@@ -57,6 +67,7 @@ describe("Access movie detail", () => {
     cy.get("[data-test-movie-detail-img='movie-image']").should("exist");
   });
   it("In movie detail, button 'Go back to search' should go backwards", () => {
+    cy.get("[data-test-movie-card='movie-card-10']").first().click();
     cy.get("[data-test-btn-goback='goback-btn']").click();
     cy.window().its("history").invoke("back");
     cy.url().should("eq", "http://localhost:5173/");
