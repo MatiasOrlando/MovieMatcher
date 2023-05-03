@@ -6,11 +6,11 @@ Features:
 
 Search and display movies: Users can search for specific movies that match their search criteria.
 
-Display details of a selected movie: Users can access comprehensive information about a particular movie, such as the plot summary, type of genres, trailers and ratings.
+Display details of a selected movie: Users can access comprehensive information about a particular movie, such as the plot summary, type of genres, m trailers and ratings.
 
 Add and remove movies to/from favorites: Users can add their preferred movies to their favorites list, which they can access later. Users can also remove movies from their list if they change their minds.
 
-Create a "Watch later" list: Users can maintain a list of movies they intend to watch in the future.
+Create a "Watch later" list: Users can keep a list of movies they intend to watch in the future.
 
 <br>
 
