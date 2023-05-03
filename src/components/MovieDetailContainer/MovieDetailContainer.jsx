@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import noImageAvailable from "../../assets/noimg.jpeg";
 import { fetchSingleMovie, fetchMovieTrailer } from "../../services/api";
 import { Toaster } from "react-hot-toast";
+import { pathImg } from "../../utils/images-url";
 import {
   Box,
   Button,
@@ -14,7 +15,6 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
-import { pathImg } from "../../utils/images-url";
 
 const MovieDetailContainer = ({ id }) => {
   const [movieDetail, setMovieDetail] = useState({});
@@ -23,12 +23,13 @@ const MovieDetailContainer = ({ id }) => {
   const [isErr, setIsErr] = useState(false);
   const { handleFavorites, handleWatchLater, userFavorites } =
     useContext(context);
+
   const navigateHome = useNavigate();
   const imgMovieDetail = `${pathImg}/w342`;
 
   useEffect(() => {
     try {
-      const fetchDataMovie = async () => {
+      const fetchDataSingleMovie = async () => {
         const dataMovie = await fetchSingleMovie("movie", {
           movieId: id,
           language: "en-US",
@@ -36,7 +37,7 @@ const MovieDetailContainer = ({ id }) => {
         });
         setMovieDetail(dataMovie.data);
       };
-      fetchDataMovie();
+      fetchDataSingleMovie();
       const isFavoriteMovie = userFavorites.find((movie) => movie.id == id);
       setIsInFavList(isFavoriteMovie !== undefined);
     } catch (error) {
@@ -74,11 +75,13 @@ const MovieDetailContainer = ({ id }) => {
           sx={{
             display: "flex",
             justifyContent: "center",
-            marginTop: "2.5rem",
+            marginTop: "1.5rem",
             color: "white",
           }}
         >
-          <h3>No movie data available, please try again later..</h3>
+          <Typography variant="h6" sx={{ textAlign: "center" }}>
+            No data available, please try again later..
+          </Typography>
         </Box>
       ) : (
         <>

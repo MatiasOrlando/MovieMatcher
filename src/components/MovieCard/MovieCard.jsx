@@ -20,17 +20,16 @@ import { Toaster } from "react-hot-toast";
 import { pathImg } from "../../utils/images-url";
 
 const MovieCard = ({ movie, i }) => {
-  const { pathname } = useLocation();
-  const pathnameClean = pathname.slice(1);
-  const imgMovieCard = `${pathImg}/w300`;
   const [isStarOn, setIsStarOn] = useState(false);
-
   const {
     userFavorites,
     handleFavorites,
     handleDeleteWatchLater,
     handleWatchLater,
   } = useContext(context);
+  const { pathname } = useLocation();
+  const pathnameClean = pathname.slice(1);
+  const imgMovieCard = `${pathImg}/w300`;
 
   useEffect(() => {
     setIsStarOn(userFavorites.some((userMovie) => userMovie.id === movie.id));

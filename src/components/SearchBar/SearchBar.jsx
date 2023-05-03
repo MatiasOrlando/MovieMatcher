@@ -38,7 +38,7 @@ const SearchBar = () => {
         onChange={handleChange}
         value={searchTerm}
       />
-      <IconButton type="submit" aria-label="search" onSubmit={handleSubmit}>
+      <IconButton type="submit" aria-label="search">
         <SearchIcon />
       </IconButton>
       {showClearIcon && (

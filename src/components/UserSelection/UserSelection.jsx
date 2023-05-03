@@ -1,14 +1,17 @@
 import React from "react";
 import MovieCard from "../MovieCard/MovieCard";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const UserSelection = ({ movies, type }) => {
   const title = type === "favorites" ? "My favorites list" : "My watch list";
   return (
     <>
-      <h2 style={{ textAlign: "center", marginTop: "50px", color: "white" }}>
+      <Typography
+        variant="h5"
+        sx={{ textAlign: "center", marginTop: "50px", color: "white" }}
+      >
         {title}
-      </h2>
+      </Typography>
       {movies && movies.length >= 1 ? (
         <Box
           sx={{
@@ -25,12 +28,14 @@ const UserSelection = ({ movies, type }) => {
           })}
         </Box>
       ) : (
-        <h3
-          style={{ textAlign: "center", marginTop: "20px", color: "white" }}
+        <Typography
+          variant="h6"
+          align="center"
+          sx={{ marginTop: "20px", color: "white" }}
           data-test-selection-user="user-selection"
         >
           No {type} added yet..
-        </h3>
+        </Typography>
       )}
     </>
   );

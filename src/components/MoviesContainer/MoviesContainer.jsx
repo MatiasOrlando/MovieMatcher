@@ -6,8 +6,8 @@ import { Toaster } from "react-hot-toast";
 import { Box } from "@mui/material";
 
 const MoviesContainer = () => {
-  const { movieQuerySearch, page, setPagination } = useContext(context);
   const [dataMovies, setDataMovies] = useState([]);
+  const { movieQuerySearch, page, setPagination } = useContext(context);
 
   useEffect(() => {
     const fetchDataMovies = async () => {

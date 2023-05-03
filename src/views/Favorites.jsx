@@ -5,6 +5,7 @@ import UserSelection from "../components/UserSelection/UserSelection";
 const Favorites = () => {
   const [userFavoriteMovies, setUserFavoriteMovies] = useState([]);
   const { userFavorites } = useContext(context);
+
   useEffect(() => {
     const allUserFavorites = JSON.parse(localStorage.getItem("userFavorites"));
     setUserFavoriteMovies(allUserFavorites);

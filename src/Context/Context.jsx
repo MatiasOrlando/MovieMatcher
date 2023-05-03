@@ -34,7 +34,7 @@ const Context = ({ children }) => {
         searchTermValue: searchTerm,
       });
       setMovieQuerySearch(movieQuery.data.results);
-      if (!movieQuery.data.results.length && searchTerm !== "") {
+      if (!movieQuery.data.results.length && searchTerm.trim() !== "") {
         toast.error("No matches found, please try again", {
           duration: 1000,
           style: {
@@ -59,7 +59,6 @@ const Context = ({ children }) => {
       );
       localStorage.setItem("userFavorites", JSON.stringify(newFavorites));
       setUserFavorites(newFavorites);
-
       toast.error("Removed from favorites", {
         duration: "100",
         style: {
@@ -72,7 +71,6 @@ const Context = ({ children }) => {
       const newFavorites = [...userFavorites, movie];
       localStorage.setItem("userFavorites", JSON.stringify(newFavorites));
       setUserFavorites(newFavorites);
-
       toast.success("Successfully added to favorites", {
         duration: "100",
         style: {

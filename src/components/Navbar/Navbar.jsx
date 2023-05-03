@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const navToPage = useNavigate();
-  const pages = ["Home", "Favorites", "Watch later"];
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -29,6 +28,7 @@ const Navbar = () => {
     if (page === "Favorites") navToPage("/favorites");
     if (page === "Watch later") navToPage("/watchlater");
   };
+  const pages = ["Home", "Favorites", "Watch later"];
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "black" }}>
