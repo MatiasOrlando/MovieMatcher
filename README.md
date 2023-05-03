@@ -13,6 +13,7 @@ Add and remove movies to/from favorites: Users can add their preferred movies to
 Create a "Watch later" list: Users can maintain a list of movies they intend to watch in the future.
 
 <br>
+
 ## Deploy
 
 Link <a href=""/>MOVIE-MATCHER</a>
