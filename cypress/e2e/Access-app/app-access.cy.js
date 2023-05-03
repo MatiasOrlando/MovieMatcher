@@ -1,6 +1,9 @@
 const apiKey = Cypress.env("API_KEY");
 
 describe("Access to app", () => {
+  beforeEach(() => {
+    cy.visit("http://localhost:5173/");
+  });
   it("Visits the app and verifies the page initial content", () => {
     cy.title().should("contain", "Movie Matcher");
     cy.get("input").should("exist");
