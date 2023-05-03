@@ -61,6 +61,7 @@ const MovieCard = ({ movie, i }) => {
             component="img"
             alt={movie.title}
             height="360"
+            data-test="card-img"
             image={
               movie.poster_path
                 ? `${imgMovieCard}${movie.poster_path}`

@@ -1,9 +1,6 @@
 const apiKey = Cypress.env("API_KEY");
 
 describe("Access to app", () => {
-  beforeEach(() => {
-    cy.visit("http://localhost:5173/");
-  });
   it("Visits the app and verifies the page initial content", () => {
     cy.title().should("contain", "Movie Matcher");
     cy.get("input").should("exist");
@@ -16,7 +13,7 @@ describe("Access to app", () => {
       "GET",
       `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&page=1`
     ).as("getMovies");
-    cy.wait("@getMovies", { timeout: 10000 }).then((interception) => {
+    cy.wait("@getMovies").then((interception) => {
       expect(interception.response.statusCode).to.equal(200);
       const movies = interception.response.body.results;
       expect(movies).to.be.an("array");
@@ -48,8 +45,12 @@ describe("Access movie detail", () => {
   });
   it("Should visit the app, click on a card and display movie detail", () => {
     cy.get("[data-test-movie-detail-title='detailTitle']").should("exist");
-    cy.get("[data-test-watch-btn='watch-btn']").should("exist");
-    cy.get("[data-test-add-fav-btn='fav-btn']").should("exist");
+    cy.get("[data-test-watch-btn='watch-btn']")
+      .should("exist")
+      .should("be.visible");
+    cy.get("[data-test-add-fav-btn='fav-btn']")
+      .should("exist")
+      .should("be.visible");
     cy.get("[data-test-movie-detail-img='movie-image']").should("exist");
   });
   it("In movie detail, button 'Go back to search' should go backwards", () => {
