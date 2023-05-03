@@ -1,7 +1,19 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-})
+  server: {
+    fs: {
+      strict: false,
+    },
+    middleware: [
+      (req, res, next) => {
+        if (req.originalUrl !== "/" && !req.originalUrl.includes(".")) {
+          req.url = "/";
+        }
+        next();
+      },
+    ],
+  },
+});

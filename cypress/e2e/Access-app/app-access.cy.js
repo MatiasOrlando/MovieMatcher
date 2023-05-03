@@ -41,7 +41,7 @@ describe("Access to app", () => {
   });
 });
 
-describe.only("Access movie detail", () => {
+describe("Access movie detail", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173/");
   });
