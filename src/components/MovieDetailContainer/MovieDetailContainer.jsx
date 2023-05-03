@@ -224,6 +224,7 @@ const MovieDetailContainer = ({ id }) => {
                             marginRight: 2,
                             fontSize: "0.8rem",
                           }}
+                          data-test-watch-btn="watch-btn"
                           onClick={() => handleWatchLater(movieDetail)}
                         >
                           Watch later

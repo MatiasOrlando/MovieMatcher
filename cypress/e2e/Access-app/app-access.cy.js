@@ -31,6 +31,12 @@ describe("Access to application", () => {
       cy.get("[data-test-card-release-date=1]")
         .invoke("text")
         .should("eq", movies[1].release_date);
+      cy.get("[data-test-star-card-title=2]")
+        .invoke("text")
+        .should("eq", movies[2].title);
+      cy.get("[data-test-card-release-date=2]")
+        .invoke("text")
+        .should("eq", movies[2].release_date);
     });
   });
 });

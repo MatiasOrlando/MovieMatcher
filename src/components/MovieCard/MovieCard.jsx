@@ -141,6 +141,7 @@ const MovieCard = ({ movie, i }) => {
                   onClick={() => {
                     handleWatchLater(movie);
                   }}
+                  data-test-watch-later={i}
                 >
                   <Tooltip title="Add to watch list">
                     <WatchLaterOutlinedIcon

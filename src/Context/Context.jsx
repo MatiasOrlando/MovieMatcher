@@ -85,10 +85,10 @@ const Context = ({ children }) => {
   };
 
   const handleWatchLater = (movie) => {
-    const isAlreadyInWatchList = userWatchLater.find(
+    const isWatchListMovie = userWatchLater.find(
       (userMovie) => userMovie.id === movie.id
     );
-    if (!isAlreadyInWatchList) {
+    if (!isWatchListMovie) {
       const newUserWatchLater = [...userWatchLater, movie];
       localStorage.setItem("userWatchLater", JSON.stringify(newUserWatchLater));
       setUserWatchLater(newUserWatchLater);
@@ -98,6 +98,7 @@ const Context = ({ children }) => {
           background: "black",
           color: "white",
         },
+        className: "success-watch-toast-test",
       });
     } else {
       toast.error("Movie is already in watch list", {
@@ -106,6 +107,7 @@ const Context = ({ children }) => {
           background: "black",
           color: "white",
         },
+        className: "remove-watch-movie-toast-test",
       });
     }
   };
