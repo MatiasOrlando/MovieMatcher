@@ -23,6 +23,7 @@ describe("Handle watch later function on detail container", () => {
             const movieExists = arrayWatchLater.find(
               (movie) => movie.title === text
             );
+            cy.wait(200);
             expect(movieExists).to.exist;
             expect(arrayWatchLater.length).to.be.greaterThan(0);
           });
@@ -35,7 +36,7 @@ describe("Handle watch later function on detail container", () => {
     );
   });
 
-  it("Sends a toast error message when clicked for the second time if it already exists avoiding duplicates", () => {
+  it("Sends a toast error message when clicked for the second time if it already exists, avoiding duplicates", () => {
     const initialLength = 1;
     cy.get("[data-test-watch-btn='watch-btn']").click();
     cy.get("@titleMovie").then(() => {
@@ -72,6 +73,7 @@ describe("Handle watch later function on movie card", () => {
             const movieExists = arrayWatchLater.find(
               (movie) => movie.title === text
             );
+            cy.wait(150);
             expect(movieExists).to.exist;
             expect(arrayWatchLater.length).to.be.greaterThan(0);
           });
@@ -83,7 +85,7 @@ describe("Handle watch later function on movie card", () => {
       "Successfully added to watch list"
     );
   });
-  it("Sends a toast error message when clicked for the second time if it already exists avoiding duplicates", () => {
+  it("Sends a toast error message when clicked for the second time if it already exists, avoiding duplicates", () => {
     const initialLength = 1;
     cy.get("[data-test-watch-later=3]").click();
     cy.get("@titleMovie").then(() => {

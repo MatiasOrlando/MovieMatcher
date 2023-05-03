@@ -120,9 +120,16 @@ const MovieCard = ({ movie, i }) => {
                   data-test-star-fav={i}
                 >
                   {isStarOn ? (
-                    <StarIcon color="warning" sx={{ opacity: 0.5 }} />
+                    <StarIcon
+                      color="warning"
+                      sx={{ opacity: 0.5 }}
+                      data-test={`full-star-${i}`}
+                    />
                   ) : (
-                    <StarBorderIcon sx={{ opacity: 0.5 }} />
+                    <StarBorderIcon
+                      sx={{ opacity: 0.5 }}
+                      data-test={`empty-star-${i}`}
+                    />
                   )}
                 </ToggleButton>
               </Tooltip>

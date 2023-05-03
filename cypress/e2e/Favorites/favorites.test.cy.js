@@ -28,14 +28,15 @@ describe("Handle favorites function on detail container", () => {
             const movieExistsInLocal = arrayFavorites.find(
               (movie) => movie.title === text
             );
+            cy.wait(150);
             expect(movieExistsInLocal).to.exist;
             expect(arrayFavorites.length).to.be.greaterThan(0);
+            cy.get(".success-add-toast-test").should("be.visible");
+            cy.get(".success-add-toast-test").contains(
+              "Successfully added to favorites"
+            );
           });
       });
-    cy.get(".success-add-toast-test").should("be.visible");
-    cy.get(".success-add-toast-test").contains(
-      "Successfully added to favorites"
-    );
   });
 
   it("Removes a movie from favorites when clicked for the second time", () => {
@@ -65,12 +66,14 @@ describe("Handle favorites function on detail container", () => {
   });
 });
 
-describe("Handle favorites function on movie card", () => {
+describe("Handle favorites function on movie card ", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173/");
   });
-  it("Adds a movie to favorites when clicked for the first time", () => {
+  it("Adds a movie to favorites when clicked for the first time and changes Star icon", () => {
+    cy.get("[data-test='empty-star-0']");
     cy.get("[data-test-star-fav=0]").first().click();
+    cy.get("[data-test='full-star-0']").should("exist");
     cy.get("[data-test-card-title=0]")
       .invoke("text")
       .then((text) => {
@@ -81,19 +84,22 @@ describe("Handle favorites function on movie card", () => {
             const movieExists = arrayFavorites.find(
               (movie) => movie.title === text
             );
+            cy.wait(150);
             expect(movieExists).to.exist;
             expect(arrayFavorites.length).to.be.greaterThan(0);
+            cy.get(".success-add-toast-test").should("be.visible");
+            cy.get(".success-add-toast-test").contains(
+              "Successfully added to favorites"
+            );
           });
       });
-    cy.get(".success-add-toast-test").should("be.visible");
-    cy.get(".success-add-toast-test").contains(
-      "Successfully added to favorites"
-    );
   });
 
-  it("Removes a movie from favorites when clicked for the second time", () => {
+  it("Removes a movie from favorites when clicked for the second time and changes Star icon", () => {
     cy.get("[data-test-star-fav=0]").first().click();
+    cy.get("[data-test='full-star-0']");
     cy.get("[data-test-star-fav=0]").first().should("be.visible").click();
+    cy.get("[data-test='empty-star-0']").should("exist");
     cy.get("[data-test-card-title=0]")
       .invoke("text")
       .then((text) => {

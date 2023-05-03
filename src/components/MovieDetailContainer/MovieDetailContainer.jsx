@@ -241,7 +241,7 @@ const MovieDetailContainer = ({ id }) => {
                             marginRight: 1,
                             fontSize: "0.8rem",
                           }}
-                          data-test-btn-goback={`goback-btn-${id}`}
+                          data-test-btn-goback="goback-btn"
                         >
                           Go back to search
                         </Button>

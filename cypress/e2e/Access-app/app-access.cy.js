@@ -16,7 +16,7 @@ describe("Access to app", () => {
       "GET",
       `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&page=1`
     ).as("getMovies");
-    cy.wait("@getMovies").then((interception) => {
+    cy.wait("@getMovies", { timeout: 10000 }).then((interception) => {
       expect(interception.response.statusCode).to.equal(200);
       const movies = interception.response.body.results;
       expect(movies).to.be.an("array");
@@ -53,7 +53,7 @@ describe("Access movie detail", () => {
     cy.get("[data-test-movie-detail-img='movie-image']").should("exist");
   });
   it("In movie detail, button 'Go back to search' should go backwards", () => {
-    cy.get("[data-test-btn-goback='goback-btn-1048300']").click();
+    cy.get("[data-test-btn-goback='goback-btn']").click();
     cy.window().its("history").invoke("back");
     cy.url().should("eq", "http://localhost:5173/");
   });
