@@ -1,6 +1,6 @@
 # MOVIE-MATCHER 🎥
 
-Movie-centered app that uses "The Movie Database" API to display movies. Users can search and obtain information on various movies, including watching their trailers. Additionally, users can add and remove movies from their favorites list, as well as create a Watch Later list to keep track of movies they want to watch in the future.
+Movie-centered app that uses "The Movie Database" API to display movies. Users can search and obtain information on various movies, including watching their trailers. Additionally, users can add and remove movies from their favorites list, as well as creating a Watch Later list to keep track of movies they want to watch in the future.
 
 Features: 
 
