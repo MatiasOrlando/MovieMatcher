@@ -14,6 +14,12 @@ Create a "Watch later" list: Users can keep a list of movies they intend to watc
 
 <br>
 
+## DEMO
+
+Link <a href="https://www.youtube.com/watch?v=_W35mSvpBTA">MOVIE-MATCHER - YOUTUBE DEMO</a>
+
+<br>
+
 ## Deploy
 
 Link <a href="https://movie-matcher.vercel.app/">MOVIE-MATCHER</a>
@@ -43,11 +49,18 @@ This project was developed using the following technologies and frameworks:
 <li>Material-UI</li>
 </ul>
 
-Testing (end-to-end):
+## Tests :nut_and_bolt:
 
-<ul>
-<li>Cypress.io</li>
-</ul>
+Testing (end-to-end): Cypress.io
+
+Instructions: While running the project on the terminal, open a new terminal in the root directory:
+
+<ol>
+<li>Run npx cypress open, this will open cypress set up</li>
+<li>Click on E2E Testing</li>
+<li>Choose Chrome browser and click Button "Start E2E Testing in Chrome browser</li>
+<li>Once the browser is open, on the left side click on "Specs" and pick the desired test to start running</li>
+</ol>
 
 <br>
 
