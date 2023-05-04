@@ -2,7 +2,7 @@
 
 Movie-centered app that uses "The Movie Database" API to display movies. Users can search and obtain information on various movies, including watching their trailers. Additionally, users can add and remove movies from their favorites list, as well as creating a "Watch later" list to keep track of movies they want to watch in the future.
 
-Features: 
+Features:
 
 Search and display movies: Users can search for specific movies that match their search criteria.
 
@@ -16,20 +16,19 @@ Create a "Watch later" list: Users can keep a list of movies they intend to watc
 
 ## Deploy
 
-Link <a href=""/>MOVIE-MATCHER</a>
+Link <a href="https://movie-matcher.vercel.app/">MOVIE-MATCHER</a>
 
 <br>
 
 ## Installation :hammer:
 
-| Root 
+| Root
 |---------
 | npm i
 
 | Root
 |---------
 | npm run dev
-
 
 Open http://localhost:5173 to view it in your browser.
 
@@ -38,7 +37,6 @@ Open http://localhost:5173 to view it in your browser.
 ## Technologies 🛠️
 
 This project was developed using the following technologies and frameworks:
-
 
 <ul>
 <li>React</li>
@@ -56,10 +54,11 @@ Testing (end-to-end):
 ## Version :pencil:
 
 ### v1.0.0 - May 04, 2023
-* Initial version
+
+- Initial version
 
 <br>
 
 ## Author :rocket:
 
-* Matias Orlando
+- Matias Orlando
