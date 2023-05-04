@@ -56,10 +56,10 @@ Testing (end-to-end): Cypress.io
 Instructions: While running the project on the terminal, open a new terminal in the root directory:
 
 <ol>
-<li>Run npx cypress open, this will open cypress set up</li>
-<li>Click on E2E Testing</li>
-<li>Choose Chrome browser and click Button "Start E2E Testing in Chrome browser</li>
-<li>Once the browser is open, on the left side click on "Specs" and pick the desired test to start running</li>
+<li>Run npx cypress open, this will open cypress set up.</li>
+<li>Click on E2E Testing.</li>
+<li>Choose Chrome browser and click Button "Start E2E Testing in Chrome browser.</li>
+<li>Once the browser is open, on the left side click on "Specs" and pick the desired test to start running.</li>
 </ol>
 
 <br>
