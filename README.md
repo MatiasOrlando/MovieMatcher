@@ -50,6 +50,7 @@ This project was developed using the following technologies and frameworks:
 </ul>
 
 <br>
+
 ## Tests :nut_and_bolt:
 
 Testing (end-to-end): Cypress.io
