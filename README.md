@@ -57,10 +57,6 @@ Testing (E2E) Cypress.io
 
 While running the project on the terminal, open a new terminal in the root directory:
 
-Option 1: run npm test
-
-Option 2:
-
 <ol>
 <li>Run npx cypress open, this will open cypress set up.</li>
 <li>Click on E2E Testing.</li>
