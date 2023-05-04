@@ -1,3 +1,8 @@
+import {
+  addWatchLaterInMovieCard,
+  handleErrorAddWatchList,
+} from "./helpers-watch-later";
+
 describe("Access to watch later section", () => {
   it("Visits the watch later section and validates the URL", () => {
     cy.visit("http://localhost:5173/watchlater");
@@ -37,47 +42,16 @@ describe("Handle watch later function on detail container", () => {
   });
 
   it("Sends a toast error message when clicked for the second time if it already exists, avoiding duplicates", () => {
-    const initialLength = 1;
-    cy.get("[data-test-watch-btn='watch-btn']").click();
-    cy.get("@titleMovie").then(() => {
-      cy.window()
-        .its("localStorage.userWatchLater")
-        .then((storedArrayWatchLater) => {
-          const arrayWatchLater = JSON.parse(storedArrayWatchLater);
-          const duplicateMovies = arrayWatchLater.filter(
-            (movie, i) => arrayWatchLater.indexOf(movie) !== i
-          );
-          expect(duplicateMovies.length).to.equal(0);
-          expect(arrayWatchLater.length).to.equal(initialLength);
-          cy.get(".remove-watch-movie-toast-test").should("be.visible");
-          cy.get(".remove-watch-movie-toast-test").contains(
-            "Movie is already in watch list"
-          );
-        });
-    });
+    handleErrorAddWatchList("[data-test-watch-btn='watch-btn']");
   });
 });
 
 describe("Handle watch later function on movie card", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:5173/");
-    cy.get("[data-test-watch-later=3]").click();
-    cy.get("[data-test-card-title=3]")
-      .invoke("text")
-      .as("titleMovie")
-      .then((text) => {
-        cy.window()
-          .its("localStorage.userWatchLater")
-          .then((storedArrayWatchLater) => {
-            const arrayWatchLater = JSON.parse(storedArrayWatchLater) || [];
-            const movieExists = arrayWatchLater.find(
-              (movie) => movie.title === text
-            );
-            cy.wait(200);
-            expect(movieExists).to.exist;
-            expect(arrayWatchLater.length).to.be.greaterThan(0);
-          });
-      });
+    addWatchLaterInMovieCard(
+      "[data-test-watch-later=3]",
+      "[data-test-card-title=3]"
+    );
   });
   it("Adds a movie to watch later list when clicked for the first time", () => {
     cy.get(".success-watch-toast-test").should("be.visible");
@@ -86,24 +60,7 @@ describe("Handle watch later function on movie card", () => {
     );
   });
   it("Sends a toast error message when clicked for the second time if it already exists, avoiding duplicates", () => {
-    const initialLength = 1;
-    cy.get("[data-test-watch-later=3]").click();
-    cy.get("@titleMovie").then(() => {
-      cy.window()
-        .its("localStorage.userWatchLater")
-        .then((storedArrayWatchLater) => {
-          const arrayWatchLater = JSON.parse(storedArrayWatchLater);
-          const duplicateMovies = arrayWatchLater.filter(
-            (movie, i) => arrayWatchLater.indexOf(movie) !== i
-          );
-          expect(duplicateMovies.length).to.equal(0);
-          expect(arrayWatchLater.length).to.equal(initialLength);
-          cy.get(".remove-watch-movie-toast-test").should("be.visible");
-          cy.get(".remove-watch-movie-toast-test").contains(
-            "Movie is already in watch list"
-          );
-        });
-    });
+    handleErrorAddWatchList("[data-test-watch-later='3']");
   });
 });
 
@@ -146,7 +103,6 @@ describe("Displays user's watch later list in Watch later page", () => {
     cy.get("[data-test-selection-user='user-selection']").contains(
       "No watch list added yet.."
     );
-
     cy.visit("http://localhost:5173/");
     cy.get("[data-test-watch-later='5']").first().click();
     cy.get("[data-test-watch-later='6']").first().click();

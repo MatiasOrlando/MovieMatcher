@@ -66,7 +66,7 @@ describe("Handle favorites function on detail container", () => {
   });
 });
 
-describe("Handle favorites function on movie card ", () => {
+describe("Handle favorites function on movie card", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173/");
   });
@@ -74,6 +74,7 @@ describe("Handle favorites function on movie card ", () => {
     cy.get("[data-test='empty-star-0']");
     cy.get("[data-test-star-fav=0]").first().click();
     cy.get("[data-test='full-star-0']").should("exist");
+    cy.get("[data-test='empty-star-0']").should("not.exist");
     cy.get("[data-test-card-title=0]")
       .invoke("text")
       .then((text) => {
@@ -100,6 +101,7 @@ describe("Handle favorites function on movie card ", () => {
     cy.get("[data-test='full-star-0']");
     cy.get("[data-test-star-fav=0]").first().should("be.visible").click();
     cy.get("[data-test='empty-star-0']").should("exist");
+    cy.get("[data-test='full-star-0']").should("not.exist");
     cy.get("[data-test-card-title=0]")
       .invoke("text")
       .then((text) => {
@@ -126,7 +128,6 @@ describe("Displays user's favorites in Favorites page", () => {
     cy.get("[data-test-selection-user='user-selection']").contains(
       "No favorites added yet.."
     );
-
     cy.visit("http://localhost:5173/");
     cy.get("[data-test-star-fav=2]").first().click();
     cy.get("[data-test-star-fav=3]").first().click();
