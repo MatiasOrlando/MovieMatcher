@@ -17,6 +17,7 @@ describe("Handle favorites function on detail container", () => {
       "contain.text",
       "Add to favorites"
     );
+    cy.wait(100);
     cy.get("[data-test-add-fav-btn='fav-btn']").click();
     cy.get("[data-test-movie-detail-title='detailTitle']")
       .invoke("text")
@@ -28,7 +29,7 @@ describe("Handle favorites function on detail container", () => {
             const movieExistsInLocal = arrayFavorites.find(
               (movie) => movie.title === text
             );
-            cy.wait(200);
+            cy.wait(100);
             expect(movieExistsInLocal).to.exist;
             expect(arrayFavorites.length).to.be.greaterThan(0);
             cy.get(".success-add-toast-test").should("be.visible");
@@ -40,6 +41,7 @@ describe("Handle favorites function on detail container", () => {
   });
 
   it("Removes a movie from favorites when clicked for the second time", () => {
+    cy.wait(100);
     cy.get("[data-test-add-fav-btn='fav-btn']").click();
     cy.get("[data-test-add-fav-btn='fav-btn']").should(
       "contain.text",
@@ -85,7 +87,7 @@ describe("Handle favorites function on movie card", () => {
             const movieExists = arrayFavorites.find(
               (movie) => movie.title === text
             );
-            cy.wait(200);
+            cy.wait(100);
             expect(movieExists).to.exist;
             expect(arrayFavorites.length).to.be.greaterThan(0);
             cy.get(".success-add-toast-test").should("be.visible");

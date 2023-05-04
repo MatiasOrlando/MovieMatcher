@@ -16,6 +16,7 @@ describe("Handle watch later function on detail container", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173/");
     cy.get("[data-test-movie-card='movie-card-4']").first().click();
+    cy.wait(100);
     cy.get("[data-test-watch-btn='watch-btn']").click();
     cy.get("[data-test-movie-detail-title='detailTitle']")
       .invoke("text")
@@ -28,7 +29,7 @@ describe("Handle watch later function on detail container", () => {
             const movieExists = arrayWatchLater.find(
               (movie) => movie.title === text
             );
-            cy.wait(200);
+            cy.wait(100);
             expect(movieExists).to.exist;
             expect(arrayWatchLater.length).to.be.greaterThan(0);
           });
@@ -79,7 +80,7 @@ describe("Handle delete movie from watch later list", () => {
             const movieExists = arrayWatchLater.find(
               (movie) => movie.title === text
             );
-            cy.wait(200);
+            cy.wait(100);
             expect(movieExists).to.exist;
             expect(arrayWatchLater.length).to.be.greaterThan(0);
           });

@@ -16,6 +16,7 @@ describe("Search movies", () => {
       .should("have.value", inputText);
     cy.get("form").submit();
     cy.wait("@getQueryMovies").its("response.statusCode").should("eq", 200);
+    cy.wait(100);
     cy.get("[data-test-all-cards='all-movie-cards']")
       .should("have.length.above", 0)
       .each(($card) => {
