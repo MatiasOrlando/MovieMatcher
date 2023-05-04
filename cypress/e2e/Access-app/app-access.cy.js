@@ -45,6 +45,29 @@ describe("Access movie detail", () => {
   beforeEach(() => {
     cy.visit("http://localhost:5173/");
   });
+  it("Should visit the app, click on 'Learn more' button and display movie detail", () => {
+    cy.get("[data-test-movie-card='movie-card-8']")
+      .invoke("text")
+      .as("MovieTitle");
+    cy.get("[data-test='learn-btn-8']").first().click();
+    cy.get("[data-test-movie-detail-title='detailTitle']")
+      .should("exist")
+      .invoke("text")
+      .then((text) => {
+        cy.get("@MovieTitle").then((movieTitle) => {
+          expect(text).to.contain(movieTitle);
+        });
+      });
+    cy.get("[data-test-watch-btn='watch-btn']")
+      .should("exist")
+      .should("be.visible");
+    cy.get("[data-test-add-fav-btn='fav-btn']")
+      .should("exist")
+      .should("be.visible");
+    cy.get("[data-test-movie-detail-img='movie-image']")
+      .should("exist")
+      .should("be.visible");
+  });
   it("Should visit the app, click on a card and display movie detail", () => {
     cy.get("[data-test-movie-card='movie-card-10']")
       .invoke("text")
@@ -64,7 +87,9 @@ describe("Access movie detail", () => {
     cy.get("[data-test-add-fav-btn='fav-btn']")
       .should("exist")
       .should("be.visible");
-    cy.get("[data-test-movie-detail-img='movie-image']").should("exist");
+    cy.get("[data-test-movie-detail-img='movie-image']")
+      .should("exist")
+      .should("be.visible");
   });
   it("In movie detail, button 'Go back to search' should go backwards", () => {
     cy.get("[data-test-movie-card='movie-card-10']").first().click();

@@ -188,7 +188,9 @@ const MovieCard = ({ movie, i }) => {
           >
             <Box sx={{ maxHeight: "20%" }}>
               <Link to={`/movies/${movie.id}`}>
-                <Button size="small">Learn More</Button>
+                <Button size="small" data-test={`learn-btn-${i}`}>
+                  Learn More
+                </Button>
               </Link>
             </Box>
           </Box>

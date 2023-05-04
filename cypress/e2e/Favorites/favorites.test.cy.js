@@ -28,7 +28,7 @@ describe("Handle favorites function on detail container", () => {
             const movieExistsInLocal = arrayFavorites.find(
               (movie) => movie.title === text
             );
-            cy.wait(150);
+            cy.wait(200);
             expect(movieExistsInLocal).to.exist;
             expect(arrayFavorites.length).to.be.greaterThan(0);
             cy.get(".success-add-toast-test").should("be.visible");
@@ -84,7 +84,7 @@ describe("Handle favorites function on movie card ", () => {
             const movieExists = arrayFavorites.find(
               (movie) => movie.title === text
             );
-            cy.wait(150);
+            cy.wait(200);
             expect(movieExists).to.exist;
             expect(arrayFavorites.length).to.be.greaterThan(0);
             cy.get(".success-add-toast-test").should("be.visible");

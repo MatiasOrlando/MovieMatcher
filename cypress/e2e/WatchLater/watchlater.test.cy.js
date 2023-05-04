@@ -73,7 +73,7 @@ describe("Handle watch later function on movie card", () => {
             const movieExists = arrayWatchLater.find(
               (movie) => movie.title === text
             );
-            cy.wait(150);
+            cy.wait(200);
             expect(movieExists).to.exist;
             expect(arrayWatchLater.length).to.be.greaterThan(0);
           });
@@ -104,6 +104,39 @@ describe("Handle watch later function on movie card", () => {
           );
         });
     });
+  });
+});
+
+describe("Handle delete movie from watch later list", () => {
+  it("Should remove movie added to Watch later list", () => {
+    cy.visit("http://localhost:5173/");
+    cy.get("[data-test-watch-later=3]").click();
+    cy.get("[data-test-card-title=3]")
+      .invoke("text")
+      .as("titleMovie")
+      .then((text) => {
+        cy.window()
+          .its("localStorage.userWatchLater")
+          .then((storedArrayWatchLater) => {
+            const arrayWatchLater = JSON.parse(storedArrayWatchLater) || [];
+            const movieExists = arrayWatchLater.find(
+              (movie) => movie.title === text
+            );
+            cy.wait(200);
+            expect(movieExists).to.exist;
+            expect(arrayWatchLater.length).to.be.greaterThan(0);
+          });
+      });
+    cy.visit("http://localhost:5173/watchlater");
+    cy.get("[data-testid='DeleteForeverOutlinedIcon']").click();
+    cy.window()
+      .its("localStorage.userWatchLater")
+      .then((storedArrayWatchLater) => {
+        expect(JSON.parse(storedArrayWatchLater).length).to.equal(0);
+      });
+    cy.get("[data-test-selection-user='user-selection']")
+      .should("exist")
+      .should("be.visible");
   });
 });
 

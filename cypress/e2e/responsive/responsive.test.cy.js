@@ -63,6 +63,9 @@ function checkAccesibilityPageWatchLaterInViewPort(width, height) {
     .should("exist")
     .should("be.visible");
   cy.get("[data-test='card-img']").should("exist").should("be.visible");
+  cy.get("[data-testid='DeleteForeverOutlinedIcon']")
+    .should("exist")
+    .should("be.visible");
 }
 
 describe("Access to App Home in all devices", () => {
