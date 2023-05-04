@@ -49,6 +49,7 @@ This project was developed using the following technologies and frameworks:
 <li>Material-UI</li>
 </ul>
 
+<br>
 ## Tests :nut_and_bolt:
 
 Testing (end-to-end): Cypress.io
