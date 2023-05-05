@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { context } from "../../Context/Context";
+import ButtonMovieDetail from "../ButtonMovieDetail/ButtonMovieDetail";
+import MovieTrailerContainer from "../MovieTrailerContainer/MovieTrailerContainer";
 import { useNavigate } from "react-router-dom";
 import noImageAvailable from "../../assets/noimg.jpeg";
 import { fetchSingleMovie, fetchMovieTrailer } from "../../services/api";
@@ -7,7 +9,6 @@ import { Toaster } from "react-hot-toast";
 import { pathImg } from "../../utils/images-url";
 import {
   Box,
-  Button,
   CardContent,
   CardMedia,
   Chip,
@@ -204,50 +205,25 @@ const MovieDetailContainer = ({ id }) => {
                           },
                         }}
                       >
-                        <Button
-                          data-test-add-fav-btn="fav-btn"
-                          variant="contained"
-                          sx={{
-                            backgroundColor: "#21293D",
-                            boxShadow: "0px 3px 8px rgba(255, 255, 255, 0.3)",
-                            color: "white",
-                            marginRight: 2,
-                            fontSize: "0.8rem",
-                          }}
-                          onClick={() => handleFavorites(movieDetail)}
-                        >
-                          {isInFavList
-                            ? "Remove from favorites"
-                            : "Add to favorites"}
-                        </Button>
-                        <Button
-                          variant="contained"
-                          sx={{
-                            backgroundColor: "#21293D",
-                            boxShadow: "0px 3px 8px rgba(255, 255, 255, 0.3)",
-                            color: "white",
-                            marginRight: 2,
-                            fontSize: "0.8rem",
-                          }}
-                          data-test-watch-btn="watch-btn"
-                          onClick={() => handleWatchLater(movieDetail)}
-                        >
-                          Watch later
-                        </Button>
-                        <Button
-                          variant="contained"
-                          onClick={() => navigateHome("/")}
-                          sx={{
-                            backgroundColor: "#21293D",
-                            boxShadow: "0px 3px 8px rgba(255, 255, 255, 0.3)",
-                            color: "white",
-                            marginRight: 1,
-                            fontSize: "0.8rem",
-                          }}
-                          data-test-btn-goback="goback-btn"
-                        >
-                          Go back to search
-                        </Button>
+                        <ButtonMovieDetail
+                          text={
+                            isInFavList
+                              ? "Remove from favorites"
+                              : "Add to favorites"
+                          }
+                          handleClick={() => handleFavorites(movieDetail)}
+                          attribute={{ "data-test-add-fav-btn": "fav-btn" }}
+                        />
+                        <ButtonMovieDetail
+                          text="Watch Later"
+                          handleClick={() => handleWatchLater(movieDetail)}
+                          attribute={{ "data-test-watch-btn": "watch-btn" }}
+                        />
+                        <ButtonMovieDetail
+                          text="Go back to search"
+                          handleClick={() => navigateHome("/")}
+                          attribute={{ "data-test-btn-goback": "goback-btn" }}
+                        />
                       </Box>
                     </CardContent>
                   </Box>
@@ -255,23 +231,10 @@ const MovieDetailContainer = ({ id }) => {
               </Grid>
             </Container>
             {trailerUrl && (
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  margin: "70px 0px 50px 0px",
-                }}
-              >
-                <iframe
-                  width="560"
-                  height="315"
-                  src={trailerUrl}
-                  title="Trailer"
-                  allowFullScreen
-                  className="trailerMovie"
-                  alt={movieDetail.title}
-                />
-              </Box>
+              <MovieTrailerContainer
+                trailerUrl={trailerUrl}
+                movieDetail={movieDetail}
+              />
             )}
           </Box>
           <Toaster />
